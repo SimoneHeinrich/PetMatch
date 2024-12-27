@@ -296,6 +296,13 @@ Wir **entscheiden uns für Bootstrap**.
 ## Fazit
 Bootstrap ist ideal, um mit wenig Aufwand ein konsistentes und modernes Design zu erreichen, das unseren UI-Anforderungen gerecht wird. Der zusätzliche Lernaufwand ist minimal im Vergleich zum Nutzen für das Projekt.
 
+# Anpassung der Routen
+
+## Meta
+Status: **Decided**
+- **Entscheidung getroffen von:** Simone Heinrich, Patryk Kujawski
+- **Erstellt**: 21. Dezember 2024
+
 ## Problemstellung
 
 Bei der Umsetzung des MVPs ist aufgefallen, dass zusätzliche Routen erforderlich sind, um die Projektvoraussetzungen zu erfüllen und um alle geplanten Funktionen abzubilden. Für den Bereich „Mein Profil“ benötigen wir sowohl eine Route zum Anzeigen als auch eine Route zum Bearbeiten des Profils. Darüber hinaus müssen wir für die Umwandlung von Adressen in Längen- und Breitengrade zusätzliche Backend-Routen (z. B. sowas wie „api-konvertiert“ und „api-feed“) einrichten. Für die Übersichtlichkeit sollten Standardrouten wie Datenschutz, Impressum und Kontakt auch hinzugefügt werden.

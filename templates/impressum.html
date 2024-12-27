@@ -1,7 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Impressum</h2>
-<p>Hier kommt das Impressum hin</p>
+<body class="seite-impressum">
+    <!-- Überschrift -->
+    <h2 class="text-center my-4">Impressum</h2>
 
+    <!-- Inhalt des Impressums -->
+    <div class="container" style="font-size: 16px; line-height: 1.8; text-align: justify;">
+        <h3>Anbieter:</h3>
+        <p>
+            Simone Heinrich, Patryk Kujawski<br>
+            Musterstraße 34<br>
+            12345 Berlin
+        </p>
+
+        <h3>Kontakt:</h3>
+        <p>
+            Telefon: 030/1234567-8<br>
+            Telefax: 030/1234567-9<br>
+            E-Mail: <a href="mailto:petmatch@web.de">petmatch@web.de</a><br>
+            Website: <a href="https://www.petmatch.de" target="_blank">www.petmatch.de</a>
+        </p>
+
+        <h3>Haftungsausschluss:</h3>
+        <p>
+            Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
+        </p>
+
+        <h3>Urheberrecht:</h3>
+        <p>
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+        </p>
+    </div>
+</body>
 {% endblock %}
