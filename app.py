@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from db import db, Benutzer, Halter, Tier, Feedbeitrag, Bild #db.py importieren
 from datetime import datetime
+from geoapify import get_coordinates  # Importiere die Funktion aus geoapify.py
 import os
 
 
@@ -113,72 +114,73 @@ def profil_bearbeiten():
     tier = Tier.query.filter_by(halter_id=halter.halter_id).first() if halter else None
 
     if request.method == 'POST':
-        # Speichern der neuen oder geänderten Daten
-
-        # Falls der Halter noch nicht existiert, erstellen und zur DB hinzufügen
-        if not halter:
-            halter = Halter(
-                email=email,
-                name=request.form.get('name'),
-                strasse=request.form.get('strasse'),
-                plz=request.form.get('plz'),
-                stadt=request.form.get('stadt')
-            )
-            db.session.add(halter)
-            db.session.commit()  # Jetzt wird die halter_id generiert
-
-         # Falls das Tier noch nicht existiert, erstellen und zur DB hinzufügen
-        if not tier:
-            tier = Tier(
-                halter_id=halter.halter_id,  # Verknüpfe mit der generierten halter_id
-                tier_name=request.form.get('tier_name'),
-                rasse=request.form.get('rasse'),
-                geburtsdatum=datetime.strptime(request.form.get('geburtsdatum'), '%Y-%m-%d').date()
-                if request.form.get('geburtsdatum') else None,
-                das_mag_ich=request.form.get('das_mag_ich'),
-                das_mag_ich_nicht=request.form.get('das_mag_ich_nicht')
-            )
-            db.session.add(tier)
-        else:
-            # Wenn das Tier existiert, aktualisiere die Daten
-            tier.tier_name = request.form.get('tier_name')
-            tier.rasse = request.form.get('rasse')
-            tier.geburtsdatum = datetime.strptime(request.form.get('geburtsdatum'), '%Y-%m-%d').date() \
-                if request.form.get('geburtsdatum') else None
-            tier.das_mag_ich = request.form.get('das_mag_ich')
-            tier.das_mag_ich_nicht = request.form.get('das_mag_ich_nicht')
-
-        # Formularwerte speichern
-        halter.name = request.form.get('name')
-        halter.strasse = request.form.get('strasse')
-        halter.plz = request.form.get('plz')
-        halter.stadt = request.form.get('stadt')
-
-        tier.tier_name = request.form.get('tier_name')
-        tier.rasse = request.form.get('rasse')
-
-        # Konvertiere geburtsdatum in ein `date`-Objekt
-        geburtsdatum_str = request.form.get('geburtsdatum')
-        if geburtsdatum_str:  # Sicherstellen, dass ein Wert vorhanden ist
-            try:
-                    tier.geburtsdatum = datetime.strptime(geburtsdatum_str, '%Y-%m-%d').date()
-            except ValueError:
-                    return "Ungültiges Datumsformat. Bitte im Format YYYY-MM-DD eingeben."
-
-        tier.das_mag_ich = request.form.get('das_mag_ich')
-        tier.das_mag_ich_nicht = request.form.get('das_mag_ich_nicht')
+        # Adresse zusammenbauen
+        adresse = f"{request.form.get('strasse')} {request.form.get('hausnummer')}, {request.form.get('plz')} {request.form.get('stadt')}"
         
-        # Speichern in der Datenbank
-        db.session.commit()
+        # Geo-Koordinaten abrufen
+        breitengrad, laengengrad = get_coordinates(adresse)
+        
+        try:
+            # Sicherstellen, dass der Halter existiert oder erstellt wird
+            if not halter:
+                halter = Halter(
+                    email=email,
+                    name=request.form.get('name'),
+                    strasse=request.form.get('strasse'),
+                    hausnummer=request.form.get('hausnummer'),
+                    plz=request.form.get('plz'),
+                    stadt=request.form.get('stadt'),
+                    breitengrad=breitengrad,
+                    laengengrad=laengengrad
+                )
+                db.session.add(halter)
+                db.session.commit()  # Halter speichern und ID generieren
 
-        return redirect(url_for('feed'))  # Zurück zum Feed nach dem Speichern
+            else:
+                halter.name = request.form.get('name')
+                halter.strasse = request.form.get('strasse')
+                halter.hausnummer = request.form.get('hausnummer')
+                halter.plz = request.form.get('plz')
+                halter.stadt = request.form.get('stadt')
+                halter.breitengrad = breitengrad
+                halter.laengengrad = laengengrad
+                db.session.commit()  # Änderungen am Halter speichern
 
+            # Sicherstellen, dass das Tier existiert oder erstellt wird
+            if not tier:
+                tier = Tier(
+                    halter_id=halter.halter_id,
+                    tier_name=request.form.get('tier_name'),
+                    rasse=request.form.get('rasse'),
+                    geburtsdatum=datetime.strptime(request.form.get('geburtsdatum'), '%Y-%m-%d').date()
+                    if request.form.get('geburtsdatum') else None,
+                    das_mag_ich=request.form.get('das_mag_ich'),
+                    das_mag_ich_nicht=request.form.get('das_mag_ich_nicht')
+                )
+                db.session.add(tier)
+            else:
+                tier.tier_name = request.form.get('tier_name')
+                tier.rasse = request.form.get('rasse')
+                tier.geburtsdatum = datetime.strptime(request.form.get('geburtsdatum'), '%Y-%m-%d').date() \
+                    if request.form.get('geburtsdatum') else None
+                tier.das_mag_ich = request.form.get('das_mag_ich')
+                tier.das_mag_ich_nicht = request.form.get('das_mag_ich_nicht')
+
+            db.session.commit()
+            return redirect(url_for('feed'))  # Erfolgreich gespeichert, zurück zum Feed
+
+        except Exception as e:
+            db.session.rollback()
+            return f"Fehler beim Speichern: {e}"
+
+    # GET-Methode: Formular anzeigen mit vorhandenen Daten
     return render_template(
         "profil_bearbeiten.html",
         title="Profil bearbeiten",
         halter=halter,
         tier=tier
     )
+
 
 
 # Route für 'Beitrag erstellen'
