@@ -11,10 +11,13 @@ app = Flask(__name__)
 #statischer Session-Schlüssel
 app.secret_key = 'geheimer_schluessel'
 
-# Datenbank konfigurieren
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(basedir, "petmatch.db")}'
+# Datenbank konfigurieren (Speicherung in instance-Ordner)
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(app.instance_path, "petmatch.db")}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Stelle sicher, dass der instance-Ordner existiert
+if not os.path.exists(app.instance_path):
+    os.makedirs(app.instance_path)
 
 # Datenbank mit der App initialisieren
 db.init_app(app)
