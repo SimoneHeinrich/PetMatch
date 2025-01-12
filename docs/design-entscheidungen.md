@@ -362,7 +362,7 @@ Ich habe mich für die Verwendung von Flask-Session entschieden. Mit Flask-Sessi
 
 
 ### Zusammenfassung
-Die Entscheidung für Flask-Session ermöglicht eine einfache und sichere Umsetzung der `profil_bearbeiten`-Route. Die E-Mail des Nutzers wird beim Login in der Session gespeichert und bleibt während der Sitzung verfügbar. Dies erlaubt serverseitige Datenabfragen, ohne dass sensible Informationen wie die E-Mail-Adresse explizit im Frontend gespeichert werden müssen.
+Die Entscheidung für Flask-Session ermöglicht eine einfache und sichere Umsetzung der `profil_bearbeiten`-Route. Die E-Mail des Nutzers wird beim Login in der Session gespeichert und bleibt während der Sitzung verfügbar. Dies erlaubt serverseitige Datenabfragen, ohne dass sensible Informationen wie die E-Mail-Adresse explizit im Frontend gespeichert werden müssen. Durch den statischen Key verzichte ich auf zusätzliche Abhängigkeiten wie externe Bibliotheken oder Services (z. B. Redis oder JWT). Dies reduziert die Komplexität und hält die App schlank.
 
 ### Quellen
 - Flask-Session: https://flask-session.readthedocs.io/en/latest/
