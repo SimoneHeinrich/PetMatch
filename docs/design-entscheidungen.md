@@ -299,7 +299,7 @@ Bootstrap ist ideal, um mit wenig Aufwand ein konsistentes und modernes Design z
 # Anpassung der Routen
 
 ## Meta
-Status: **Decided**
+Status: **offen**
 - **Entscheidung getroffen von:** Simone Heinrich, Patryk Kujawski
 - **Erstellt**: 21. Dezember 2024
 
@@ -321,8 +321,6 @@ Eine Herausforderung wird es sein, die neuen Routen sinnvoll in die Architektur 
 
 Wir haben beschlossen, die genannten Routen in unsere bestehende Architektur zu integrieren und sinnvoll aufzuteilen. Die Profilfunktion wird in zwei Routen aufgeteilt (Profil anzeigen und Profil bearbeiten). Die API-Routen für die Koordinatenbestimmung werden gesondert umgesetzt und die Standardrouten (Datenschutz, Impressum, Kontakt) als separate Seiten integriert. Die Aufteilung bleibt im Wesentlichen erhalten. Falls an einzelnen Stellen ein größerer Arbeitsaufwand entsteht, bieten wir gegenseitige Unterstützung an. Die Aufteilung bleibt vorerst wie am 15.11.2024 vereinbart bestehen.
 
-
-
 ### Quellen
 
 - User Interfaces | Full-Stack Web Dev @HWR Berlin URL: GitHub Repository
@@ -330,3 +328,119 @@ Wir haben beschlossen, die genannten Routen in unsere bestehende Architektur zu 
 - Get started with Bootstrap · Bootstrap v5.3
 Zugriff 6-Dezember-2024
 
+# Nutzung von Flask-Session
+
+## Meta
+Status: **Decided**
+- **Entscheidung getroffen von:** Simone Heinrich
+- **Erstellt**: 12. Januar 2025 Nachtrag zum 20. Dezember 2024 Implementierung profil-bearbeiten-URL
+
+## Problemstellung
+Bei der Implementierung der Route `profil_bearbeiten` war es notwendig, dass Nutzerdaten über verschiedene Routen hinweg verfügbar bleiben. Dieses Problem ergibt sich aus folgenden Anforderungen:
+1. **Benutzeridentifikation:** Es muss sichergestellt sein, dass nur der aktuell angemeldete Nutzer seine Daten bearbeiten kann.
+2. **Datensicherheit:** Sensible Informationen wie die E-Mail-Adresse sollen nicht nur clientseitig (z. B. als Cookies), sondern auch serverseitig verfügbar sein.
+3. **Routing:** Der Benutzer muss zukünftig zwischen mehreren Seiten wechseln können, ohne dass die Anmeldung oder die Daten des Nutzers verloren gehen.
+
+## Entscheidung
+Ich habe mich für die Verwendung von Flask-Session entschieden. Mit Flask-Session können wir Nutzerdaten wie die E-Mail-Adresse serverseitig speichern und während der Sitzung abrufen. Die Session ermöglicht außerdem eine sichere Verwaltung von Benutzerdaten, ohne dass diese explizit in jeder Route übergeben werden müssen.
+
+## Betrachtete Alternativen
+
+| **Option**                     | **Bewertung**                                                                                                 |
+|--------------------------------|---------------------------------------------------------------------------------------------------------------|
+| **Flask-Session**              | Einfach zu implementieren, ideal für Entwicklungsphasen. Keine zusätzliche Logik für Cookie-Verwaltung nötig. |
+| **Manuelle Cookie-Verwaltung** | Flexibler, aber komplexer. Erfordert eigene Implementierung der Authentifizierung und Datenverwaltung.         |
+
+## Pro & Contra
+
+| **Kriterium**                | **Flask-Session**                                                                                 | **Manuelle Cookie-Verwaltung**                                                       |
+|------------------------------|---------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| **Implementierungsaufwand**  | ✔️ Minimaler Aufwand – Integration mit wenigen Zeilen Code.                                       | ❌ Höherer Aufwand – erfordert detaillierte Logik für Cookie-Erstellung und -Validierung. |
+| **Benutzerfreundlichkeit**   | ✔️ Einfaches Arbeiten mit serverseitig gespeicherten Sitzungsdaten.                              | ❌ Aufwendigere Nutzung – Nutzerinformationen müssen in jedem Request mitgesendet werden. |
+| **Datensicherheit**          | ✔️ Serverseitige Speicherung sorgt für höhere Sicherheit im Vergleich zu rein clientseitigen Cookies. | ❌ Erhöhtes Risiko bei unsicherer Implementierung – z. B. durch unsichere Cookies.       |
+| **Flexibilität**             | ❌ Weniger flexibel, da an Flask-Mechanismen gebunden.                                            | ✔️ Höhere Anpassungsmöglichkeiten für spezielle Anwendungsfälle.                      |
+
+
+### Zusammenfassung
+Die Entscheidung für Flask-Session ermöglicht eine einfache und sichere Umsetzung der `profil_bearbeiten`-Route. Die E-Mail des Nutzers wird beim Login in der Session gespeichert und bleibt während der Sitzung verfügbar. Dies erlaubt serverseitige Datenabfragen, ohne dass sensible Informationen wie die E-Mail-Adresse explizit im Frontend gespeichert werden müssen. Durch den statischen Key verzichte ich auf zusätzliche Abhängigkeiten wie externe Bibliotheken oder Services (z. B. Redis oder JWT). Dies reduziert die Komplexität und hält die App schlank.
+
+### Quellen
+- Flask-Session: https://flask-session.readthedocs.io/en/latest/
+Zugriff 12. Januar 2025
+- Flask Documentation: https://flask.palletsprojects.com/en/2.3.x/quickstart/#sessions
+Zugriff 12. Januar 2025
+- Flask-Login Documentation: https://flask-login.readthedocs.io/en/latest/
+Zugriff 12. Januar 2025
+
+# Nutzung der `requests`-Bibliothek
+
+## Meta
+Status: **Entschieden**
+- **Entscheidung getroffen von:** Simone Heinrich
+- **Erstellt**: 12. Januar 2025 
+
+## Problemstellung
+
+Im Rahmen der Geoapify-API-Integration mussten Adressdaten in Geo-Koordinaten umgewandelt werden, um sie in der App zu speichern. Dabei gab es zwei mögliche Ansätze:
+1. Die Nutzung der `requests`-Bibliothek.
+2. Die Implementierung mit der nativen Python-Bibliothek `http.client`.
+
+Da die Integration in kurzer Zeit und mit möglichst geringer Fehleranfälligkeit umgesetzt werden sollte, stellte sich die Frage, welche Lösung für das Projekt besser geeignet ist.
+
+**Begründung**:
+Die `requests`-Bibliothek bietet eine benutzerfreundliche und effiziente Möglichkeit, HTTP-Requests umzusetzen. Sie reduziert den Entwicklungsaufwand und bietet robuste Fehlerbehandlung, die insbesondere bei der Arbeit mit externen APIs von Vorteil ist. Dadurch bleibt mehr Zeit für die Implementierung und Optimierung anderer Projektbestandteile.
+
+Die iterative Entwicklung begann mit einer einfachen Implementierung basierend auf der Geoapify-API-Dokumentation[1], welche jedoch bei ungültigen Adressen und HTTP-Fehlern zu Abstürzen führte. Mithilfe von ChatGPT wurden gezielt Lösungsansätze getestet, z. B. durch Prompts wie:
+- "Vergleiche requests und http.client für Python-APIs. Was sind die Vor- und Nachteile, gebe mir Quellen an."
+- "Hier ist meine bisherige Lösung zur Integration der geoapify: (code aus der Quelle) angelehnt am Beispiel in der Quelle der Geoapify-Dokumentaiton für Gecode a Single Address. Wie fange ich falsche Nutzereingaben ab?" 
+- "Wie fange ich HTTP-Fehler in Python ab?"
+- "Wie funktioniert `response.raise_for_status()` in requests?"
+
+## Betrachtete Optionen
+
+| **Kriterium**               | **`requests`-Bibliothek**                                               | **`http.client`**                                                             |
+|-----------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| **Benutzerfreundlichkeit**  | 🟢 Einfache, intuitive Syntax für HTTP-Requests.                      | 🔴 Komplexere Syntax, da Header, Parameter und Body manuell formatiert werden müssen. |
+| **Codeumfang**              | 🟢 Weniger Code, da viele Funktionen vorkonfiguriert sind.           | 🔴 Längere und fehleranfälligere Implementationen durch manuelle Arbeitsschritte. |
+| **Flexibilität**            | 🟢 Unterstützt Features wie Timeout, Sessions und JSON-Payload nativ.| 🟠 Unterstützung vorhanden, aber aufwendiger zu implementieren.            |
+| **Projektabhängigkeiten**   | 🔴 Erfordert Installation einer neuen Bibliothek.                    | 🟢 Keine zusätzlichen Abhängigkeiten, da `http.client` Teil der Standardbibliothek ist. |
+| **Fehlermanagement**        | 🟢 Integrierte Methoden wie `raise_for_status()` erleichtern Debugging. | 🔴 Fehler müssen detaillierter und aufwendiger abgefangen werden.           |
+
+
+## Vorteile der `requests`-Bibliothek
+
+1. **Benutzerfreundlichkeit**  
+   Die Bibliothek ermöglicht eine intuitive Umsetzung von HTTP-Requests und reduziert den Codeumfang erheblich.
+
+2. **Zeitersparnis**  
+   Funktionen wie `response.json()` und `raise_for_status()` beschleunigen die Entwicklung und verbessern die Effizienz.
+
+3. **Robustheit**  
+   Die integrierte Fehlerbehandlung sorgt dafür, dass HTTP- und Netzwerkfehler besser abgefangen werden.
+
+4. **Komplexitätsreduktion**  
+   Vorkonfigurierte Features wie Parameterencoding und Timeout erleichtern die Arbeit mit APIs erheblich.
+
+
+## Zusammenfassung
+
+Die Entscheidung für die `requests`-Bibliothek hat die Umsetzung der Geoapify-API-Integration wesentlich vereinfacht und beschleunigt. Obwohl dadurch eine zusätzliche Projektabhängigkeit eingeführt wurde, war der Nutzen im Hinblick auf Benutzerfreundlichkeit, Robustheit und Entwicklungszeit deutlich größer als der Nachteil.
+
+Die iterative Entwicklung der Lösung – mithilfe von ChatGPT und den unten aufgeführten Quellen – hat es ermöglicht, die API Integration mithilfe eines kompakten und leicht verständlichen Codes (geoapify.py und dem Funktionsaufruf im profil-bearbeiten-routing in der app.py) umzusetzen und ein robustes System zu entwickeln, das HTTP-Fehler und ungültige Eingaben abfängt und damit die Nutzerfreundlichkeit erhöht.
+
+### Quellen
+
+- Geoapify - Geocoding Python Tutorial: [https://www.geoapify.com/tutorial/geocoding-python/](https://www.geoapify.com/tutorial/geocoding-python/)  
+Zugriff am 12. Januar 2025
+
+- Geoapify - Get Started with Maps API: [https://www.geoapify.com/get-started-with-maps-api/](https://www.geoapify.com/get-started-with-maps-api/)  
+Zugriff am 12. Januar 2025
+
+- Requests: HTTP for Humans™: [https://docs.python-requests.org/en/latest/](https://docs.python-requests.org/en/latest/)  
+Zugriff am 12. Januar 2025
+
+- Python Documentation - `http.client`: [https://docs.python.org/3/library/http.client.html](https://docs.python.org/3/library/http.client.html)  
+Zugriff am 12. Januar 2025
+
+- Oxylabs - HTTPX vs Requests vs AIOHTTP: [https://oxylabs.io/blog/httpx-vs-requests-vs-aiohttp](https://oxylabs.io/blog/httpx-vs-requests-vs-aiohttp)  
+Zugriff am 12. Januar 2025
