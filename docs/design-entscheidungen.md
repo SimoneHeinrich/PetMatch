@@ -390,7 +390,7 @@ Da die Integration in kurzer Zeit und mit möglichst geringer Fehleranfälligkei
 **Begründung**:
 Die `requests`-Bibliothek bietet eine benutzerfreundliche und effiziente Möglichkeit, HTTP-Requests umzusetzen. Sie reduziert den Entwicklungsaufwand und bietet robuste Fehlerbehandlung, die insbesondere bei der Arbeit mit externen APIs von Vorteil ist. Dadurch bleibt mehr Zeit für die Implementierung und Optimierung anderer Projektbestandteile.
 
-Die iterative Entwicklung begann mit einer einfachen Implementierung basierend auf der Geoapify-API-Dokumentation[1], welche jedoch bei ungültigen Adressen und HTTP-Fehlern zu Abstürzen führte. Mithilfe von ChatGPT wurden gezielt Lösungsansätze getestet, z. B. durch Prompts wie:
+Die iterative Entwicklung begann mit einer einfachen Implementierung basierend auf der Geoapify-API-Dokumentation. Mithilfe von ChatGPT wurden gezielt Lösungsansätze getestet, z. B. durch Prompts wie:
 - "Vergleiche requests und http.client für Python-APIs. Was sind die Vor- und Nachteile, gebe mir Quellen an."
 - "Hier ist meine bisherige Lösung zur Integration der geoapify: (code aus der Quelle) angelehnt am Beispiel in der Quelle der Geoapify-Dokumentaiton für Gecode a Single Address. Wie fange ich falsche Nutzereingaben ab?" 
 - "Wie fange ich HTTP-Fehler in Python ab?"
@@ -444,3 +444,107 @@ Zugriff am 12. Januar 2025
 
 - Oxylabs - HTTPX vs Requests vs AIOHTTP: [https://oxylabs.io/blog/httpx-vs-requests-vs-aiohttp](https://oxylabs.io/blog/httpx-vs-requests-vs-aiohttp)  
 Zugriff am 12. Januar 2025
+
+# Integration der Geoapify-API in die WebApp
+
+## Meta
+- **Status:** Abgeschlossen (Grundfunktionalität implementiert)  
+- **Entscheidung getroffen von:** Simone Heinrich  
+- **Erstellt:** 14. Januar 2025  
+
+## Problemstellung
+Für unser Projekt war es notwendig, Adressdaten in Geo-Koordinaten (Breitengrad, Längengrad) umzuwandeln, um die Filterfunktionalität der Feed-Beiträge zu ermöglichen. Dabei war die Herausforderung:
+1. Eine API-Integration zu finden, die Adressdaten effizient in Geo-Koordinaten umwandelt.
+2. Diese Integration an die spezifischen Anforderungen unserer WebApp (z. B. Route `/profil_bearbeiten` und dynamische Nutzereingaben) anzupassen.
+3. Sinnvolle Lösung zu entwickeln, da die Beispiele aus der Geoapify-Dokumentation und Community-Foren nicht direkt auf unser Projekt anwendbar waren.
+
+## Lösungsansatz
+Da die Geoapify-API unsere Anforderungen erfüllt, wurde die Integration iterativ mit Unterstützung von ChatGPT umgesetzt.
+
+### Schritte:
+1. **Start mit der Geoapify-Dokumentation:**  
+   Die bereitgestellten Beispiele aus der Dokumentation zeigten, wie statische Adressen oder mehrere Adressen verarbeitet werden können. Diese Beispiele deckten jedoch nicht unsere spezifischen Anforderungen ab.
+
+2. **Einsatz von ChatGPT:**  
+   Da in Community-Foren (z. B. Stack Overflow) keine passenden Lösungen zu finden waren, nutzte ich ChatGPT, um gezielt Unterstützung bei der Anpassung an unsere App zu erhalten:
+   - Ich gab unser Datenmodell und die Route `/profil_bearbeiten` ein.
+   - Ich bat um Hilfe bei der dynamischen Übergabe von Nutzereingaben an die Geoapify-API.
+   - Vorschläge und Code von ChatGPT wurden in unsere App integriert, getestet und angepasst.
+
+3. **Iterative Anpassung und Tests:**  
+   - Durch die iterative Vorgehensweise konnte die Funktionalität der API-Aufrufe erfolgreich an die Anforderungen der WebApp angepasst werden.
+   
+## Aktueller Stand
+Die Geoapify-API ist in die Route `/profil_bearbeiten` integriert. Die Funktionalität umfasst:
+- Übergabe der vom Nutzer eingegebenen Adressdaten an die API (geoapify.py)
+- Rückgabe von Geo-Koordinaten (Breitengrad, Längengrad) (geoapify.py)
+- Speicherung dieser Koordinaten in der Halter-Tabelle (app.py)
+
+**Nicht umgesetzt:**
+- Validierung der Nutzereingaben (z. B. durch Regex oder PLZ-Datenbanken).
+- Kontextuelle Prüfung der Geoapify-Antworten (z. B. Confidence-Werte).
+- Feedback an den Nutzer bei unplausiblen Eingaben oder Ergebnissen.
+
+Diese Punkte wurden aus zeitlichen Gründen zurückgestellt, da sie über die Kernfunktionalität hinausgehen und für die grundlegende API-Integration nicht zwingend erforderlich sind.
+
+## Zusammenfassung
+Die Kernfunktionalität der Geoapify-API-Integration konnte erfolgreich umgesetzt werden. Durch die iterative Entwicklung mit Unterstützung von ChatGPT wurde die Lösung an die spezifischen Anforderungen unseres Projekts angepasst. 
+
+**Offenlegung der Nutzung von ChatGPT:**  
+Da keine passenden Beispiele in der Dokumentation oder Community-Foren gefunden wurden, wurde ChatGPT genutzt, um 
+1. den statischen Beispielcode aus der Geoapify-Dokumentation anzupassen,
+2. die Übergabe von dynamischen Nutzereingaben zu ermöglichen,
+3. Lösungen für HTTP-Fehlerbehandlung zu entwickeln (s. Nutzung der `requests`-Bibliothek).
+
+Durch diese iterative Vorgehensweise konnten die Grundlagen für die Geoapify-Integration erfolgreich implementiert werden. Die Validierung von Nutzereingaben und die Optimierung der API-Auswertung sind zwar identifizierte Verbesserungspotenziale, werden jedoch im Rahmen dieses Projekts nicht weiter verfolgt, da die Kernfunktionalität der Anwendung bezogen auf die API-Integration, also das Umwandeln der Adress- in Geodaten und Speicherung dieser, bereits gewährleistet ist.
+
+### Quellen
+
+- Geoapify - Geocoding Python Tutorial: [https://www.geoapify.com/tutorial/geocoding-python/](https://www.geoapify.com/tutorial/geocoding-python/)  
+Zugriff am 12. Januar 2025
+
+- Geoapify - Get Started with Maps API: [https://www.geoapify.com/get-started-with-maps-api/](https://www.geoapify.com/get-started-with-maps-api/)  
+Zugriff am 12. Januar 2025
+
+- Requests: HTTP for Humans™: [https://docs.python-requests.org/en/latest/](https://docs.python-requests.org/en/latest/)  
+Zugriff am 12. Januar 2025
+
+- Python Documentation - `http.client`: [https://docs.python.org/3/library/http.client.html](https://docs.python.org/3/library/http.client.html)  
+Zugriff am 12. Januar 2025
+
+- Oxylabs - HTTPX vs Requests vs AIOHTTP: [https://oxylabs.io/blog/httpx-vs-requests-vs-aiohttp](https://oxylabs.io/blog/httpx-vs-requests-vs-aiohttp)  
+Zugriff am 12. Januar 2025
+
+# Anpassung der Routen (Aktualisiert am 14.01.2025)
+
+## Meta
+- **Status:** Abgeschlossen  
+- **Erstellt:** 21. Dezember 2024  
+- **Aktualisiert:** 14. Januar 2025  
+- **Entscheidung getroffen von:** Simone Heinrich
+
+---
+
+## Problemstellung
+
+Bei der Umsetzung des MVPs war zunächst geplant, zusätzliche Backend-Routen für spezifische API-Aufrufe (z. B. `api-konvertiert` und `api-feed`) zu implementieren. Diese sollten die Umwandlung von Adressdaten in Geo-Koordinaten und die Filterung der Feedbeiträge erleichtern. 
+
+Gleichzeitig sollten Standardrouten wie Datenschutz, Impressum und Kontakt für die Benutzerfreundlichkeit hinzugefügt werden.
+
+---
+
+## Entscheidung (Aktualisiert am 14.01.2025)
+
+Nach der Implementierung der `profil_bearbeiten`-Route wurde festgestellt, dass die ursprünglich geplanten zusätzlichen Backend-Routen für die Geoapify-API-Aufrufe nicht benötigt werden.
+
+### Begründung:
+Die API-Integration konnte direkt in der bestehenden `profil_bearbeiten`-Route umgesetzt werden. Die Geo-Koordinaten werden im Rahmen des Profilbearbeitungsprozesses dynamisch ermittelt und in der Datenbank gespeichert. Dadurch entfällt die Notwendigkeit separater API-Routen, da alle relevanten Daten und Funktionen innerhalb der bestehenden Architektur abgedeckt werden.
+
+### Vorteile:
+- **Reduzierte Komplexität:** Die bestehende Architektur wird nicht durch zusätzliche Routen erweitert.
+- **Effizienz:** Der gesamte Prozess der Adressumwandlung und Speicherung ist in einer einzigen Route zusammengefasst.
+- **Zeitersparnis:** Keine zusätzlichen Routen mussten entwickelt oder getestet werden.
+
+Die Standardrouten wie Datenschutz, Impressum und Kontakt bleiben Teil der geplanten Architektur und wurden entsprechend integriert.
+
+
