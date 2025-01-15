@@ -10,7 +10,7 @@ nav_order: 97
 **Name:** Anna Müller  
 **Alter:** 35 Jahre  
 **Beruf:** Lehrerin  
-**Haustier:** Labrador (5 Jahre alt), Wohnungskatze (3 Jahre alt)
+**Haustier:** Golden Retriever (5 Jahre alt), Wohnungskatze (3 Jahre alt)
 
 ## Hintergrund
 Anna lebt in einer Stadtwohnung und geht regelmäßig mit ihrem Hund spazieren. Sie liebt es, ihren Hund sozial zu beschäftigen, aber in der Nachbarschaft kennt sie kaum andere Hundebesitzer. Zudem ist sie oft besorgt, wenn sie Berichte über Giftköder in der Nähe liest. Sie hat auch eine Katze, die sie ab und zu in Betreuung geben muss, wenn sie auf Reisen ist, und sie würde es bevorzugen, eine vertrauenswürdige, lokale Person aus der Community zu finden, die ihre Katze betreuen kann.
@@ -26,7 +26,7 @@ Anna lebt in einer Stadtwohnung und geht regelmäßig mit ihrem Hund spazieren. 
 - Zeitersparnis durch schnelle, vertrauenswürdige Verbindungen zu anderen Tierbesitzern.
 
 ## Ziele
-- Eine App nutzen, die es ihr ermöglicht, schnell und einfach andere Tierbesitzer in ihrer Nähe zu kontaktieren, sich zu vernetzen und aktuelle Informationen über mögliche Gefahren zu erhalten.
+- Eine Plattform nutzen, die es ihr ermöglicht, schnell und einfach andere Tierbesitzer in ihrer Nähe zu kontaktieren, sich zu vernetzen und aktuelle Informationen über mögliche Gefahren zu erhalten.
 
 
 
