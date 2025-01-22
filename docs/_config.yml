@@ -18,3 +18,10 @@ callouts:
   download:
     title: 💾 Download
     color: grey-dk
+
+nav_order: 99  # Sorgt dafür, dass es als letzter Punkt erscheint
+just_the_docs:
+  nav:
+    - title: Presentation
+      url: /presentation/PetMatch.pdf
+      nav_order: 99
