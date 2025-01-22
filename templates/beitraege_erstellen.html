@@ -1,7 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Beitrag erstellen</h2>
-<p>Hier kannst du einen neuen Beitrag erstellen.</p>
-<!-- Formular oder Inhalt für das Erstellen eines Beitrags -->
+
+<body class="seite-profil-erstellen">
+    <!-- Überschrift -->
+    <h2 class="text-center my-4">Beitrag erstellen</h2> <!-- Zentrierung und Abstände -->
+
+    <div class="container mt-5">
+        <!-- Formular für die Erstellung eines Beitrages-->
+        <form method="post" action="/beitrag_erstellen" enctype="multipart/form-data">
+
+            <!-- Eingabefelder: Beitrag erstellen -->
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label for="tier_name" class="form-label">Titel:</label>
+                    <input type="text" class="form-control" id="tier_name" name="tier_name" required
+                        value="{{ tier.tier_name if tier else '' }}">
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" id="das_mag_ich" name="das_mag_ich" rows="2"
+                        placeholder="z.B. Heute hatten wir einen tollen Tag am Hundestrand.">{{ tier.das_mag_ich if tier else '' }}</textarea>
+                </div>
+            </div>
+    </div>
+
+    <!-- Button zum Foto hochladen -->
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary" style="width: 200px;">Foto hochladen</button>
+    </div>
+    </form>
+    </div>
+</body>
+
+<!-- Button zum Posten -->
+<div class="text-center mt-4">
+    <button type="submit" class="btn btn-primary" style="width: 200px;">Betrag posten</button>
+</div>
+</form>
+</div>
+</body>
 {% endblock %}
