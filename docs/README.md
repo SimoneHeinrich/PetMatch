@@ -49,7 +49,7 @@ PetMatch wurde konzipiert, um Tierbesitzern eine Plattform zu bieten, auf der si
 
 ## **Dokumentation**
 Die gesamte Dokumentation ist unter folgendem Link verfügbar:  
-> [PetMatch Dokumentation] https://studsh.github.io/PetMatch/
+> [PetMatch Dokumentation] https://simoneheinrich.github.io/PetMatch/
 
 **Enthält:**  
 - Starseite
