@@ -49,7 +49,7 @@ PetMatch wurde konzipiert, um Tierbesitzern eine Plattform zu bieten, auf der si
 
 ## **Dokumentation**
 Die gesamte Dokumentation ist unter folgendem Link verfügbar:  
-> [PetMatch Dokumentation] https://studsh.github.io/PetMatch/
+> [PetMatch Dokumentation] https://simoneheinrich.github.io/PetMatch/
 
 **Enthält:**  
 - Starseite
@@ -63,7 +63,7 @@ Die gesamte Dokumentation ist unter folgendem Link verfügbar:
 ## **Installation**
 1. **Repository klonen:**  
    ```bash
-   git clone https://github.com/studSH/PetMatch.git
+   git clone https://github.com/simoneheinrich/PetMatch.git
 
 2. **virtuelle Umgebung einrichten**
      ```bash
