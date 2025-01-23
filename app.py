@@ -27,6 +27,13 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+# Ausloggen
+@app.route('/logout', methods=['POST'])
+def logout():
+    """ Beendet die Sitzung und leitet zur Startseite weiter """
+    session.clear()  # Löscht die Sitzung
+    return redirect(url_for('index'))  # Leitet zur Startseite weiter
+
 # Startseite
 @app.route("/")
 def index():
