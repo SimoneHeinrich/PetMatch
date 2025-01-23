@@ -27,6 +27,13 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+# Ausloggen
+@app.route('/logout', methods=['POST'])
+def logout():
+    """ Beendet die Sitzung und leitet zur Startseite weiter """
+    session.clear()  # Löscht die Sitzung
+    return redirect(url_for('index'))  # Leitet zur Startseite weiter
+
 # Startseite
 @app.route("/")
 def index():
@@ -97,7 +104,7 @@ def feed():
 # Route für 'Profil anzeigen'
 @app.route("/profil_anzeigen")
 def profil_anzeigen():
-    # Logik hinzufügen, um Benutzerdaten zu laden
+    # Logik hinzufügen, um Benutzerdaten zu laden 
     return render_template("profil_anzeigen.html", title="Profil anzeigen")
 
 # Route für 'Profil bearbeiten'
@@ -184,9 +191,54 @@ def profil_bearbeiten():
 
 
 # Route für 'Beitrag erstellen'
-@app.route("/beitraege_erstellen")
+@app.route("/beitraege_erstellen", methods=['GET', 'POST'])
 def beitraege_erstellen():
-    # Logik hinzufügen, um die Beitragsseite zu rendern
+    # Überprüfen, ob der Nutzer eingeloggt ist, sonst zur Anmeldung weiterleiten
+    if 'email' not in session:
+        return redirect(url_for('anmeldung'))
+    
+    email = session['email']
+    halter = Halter.query.filter_by(email=email).first()
+
+    if not halter:
+        return "Kein Halter gefunden. Bitte erstelle dein Profil."
+    
+    # Tier des Halters abrufen (hier wird angenommen, dass ein Halter mindestens ein Tier hat)
+    tier = Tier.query.filter_by(halter_id=halter.halter_id).first()
+
+    if not tier:
+        return "Kein Tier gefunden. Bitte erstelle ein Profil mit einem Tier."
+
+    if request.method == 'POST':
+        # Formulardaten abrufen
+        titel = request.form.get('titel')
+        inhalt = request.form.get('inhalt')
+
+        # Validierung der Eingaben
+        if not titel or not inhalt:
+            return "Titel und Inhalt dürfen nicht leer sein."
+
+        try:
+            # Neuen Beitrag erstellen
+            neuer_beitrag = Feedbeitrag(
+                tier_id=tier.tier_id,
+                halter_id=halter.halter_id,
+                titel=titel,
+                inhalt=inhalt
+            )
+
+            # Beitrag in die Datenbank speichern
+            db.session.add(neuer_beitrag)
+            db.session.commit()
+
+            # Erfolgreich gespeichert, Weiterleitung zum Feed
+            return redirect(url_for('feed'))
+
+        except Exception as e:
+            db.session.rollback()
+            return f"Fehler beim Speichern des Beitrags: {e}"
+
+    # Bei GET-Anfrage das Formular anzeigen
     return render_template("beitraege_erstellen.html", title="Beitrag erstellen")
 
 # Impressum
