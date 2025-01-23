@@ -6,43 +6,44 @@
     <!-- Überschrift -->
     <h2 class="text-center my-4">Beitrag erstellen</h2> <!-- Zentrierung und Abstände -->
 
-    <!-- Profilbild mit logout-Button -->
+    <!-- Profilbild mit Logout-Button -->
     <form method="POST" action="{{ url_for('logout') }}">
         <div class="d-flex justify-content-end mt-5">
-            <img src="static/bilder/profilbild-platzhalter.png" class="rounded" alt="Profilbild">
+            <img src="{{ url_for('static', filename='bilder/profilbild-platzhalter.png') }}" class="rounded" alt="Profilbild">
         </div>
         <div class="d-flex justify-content-end mt-6">
-            <button type="submit" class="btn btn-primary" style="width: 200px;">ausloggen</button>
+            <button type="submit" class="btn btn-primary" style="width: 200px;">Ausloggen</button>
         </div>
     </form>
 
     <div class="container mt-5">
-        <!-- Formular für die Erstellung eines Beitrages-->
-        <form method="post" action="/beitrag_erstellen" enctype="multipart/form-data">
+        <!-- Formular für die Erstellung eines Beitrags -->
+        <form method="POST" action="{{ url_for('beitraege_erstellen') }}" enctype="multipart/form-data">
 
             <!-- Eingabefelder: Beitrag erstellen -->
             <div class="col-md-8">
                 <div class="mb-3">
-                    <label for="tier_name" class="form-label">Titel:</label>
-                    <input type="text" class="form-control" id="tier_name" name="tier_name" required
-                        value="{{ tier.tier_name if tier else '' }}">
+                    <label for="titel" class="form-label">Titel:</label>
+                    <input type="text" class="form-control" id="titel" name="titel" required>
                 </div>
                 <div class="mb-3">
-                    <textarea class="form-control" id="beitrag_erstellen" name="beitrag_erstellen" rows="6"
-                        placeholder="z.B. Heute hatten wir einen tollen Tag am Hundestrand.">{{ tier.das_mag_ich if tier else '' }}</textarea>
+                    <label for="inhalt" class="form-label">Beitrag:</label>
+                    <textarea class="form-control" id="inhalt" name="inhalt" rows="6"
+                        placeholder="z.B. Heute hatten wir einen tollen Tag am Hundestrand."></textarea>
                 </div>
             </div>
+
+            <!-- Button zum Foto hochladen -->
+            <div class="text-center mt-3">
+               <button type="submit" class="btn btn-primary" style="width: 200px; " disabled>Foto hochladen</button>
+            </div>
+
+            <!-- Button zum Posten -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary" style="width: 200px;">Beitrag posten</button>
+            </div>
+
         </form>
-    </div>
-
-    <!-- Button zum Foto hochladen -->
-    <div class="text-center mt-3">
-        <button type="submit" class="btn btn-primary" style="width: 200px;">Foto hochladen</button>
-    </div>
-
-    <!-- Button zum Posten -->
-    <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary" style="width: 200px;">Betrag posten</button>
     </div>
 
 </body>
