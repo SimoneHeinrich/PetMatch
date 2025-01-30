@@ -109,7 +109,7 @@ def feed():
     # Überprüfen, ob der Nutzer ein Tier hat
     tier_existiert = False
     if halter:
-        tier_existiert = Tier.query.filter_by(halter_id=halter.halter_id).first() is not None
+        tier_existiert = Tier.query.filter_by(halter_id=halter.halter_id).one() is not None
 
     # Nur wenn Halter UND Tier existieren, Beiträge anzeigen
     beitraege = []
@@ -143,7 +143,7 @@ def profil_bearbeiten():
 
     # Daten des Halters anhand der E-Mail abrufen
     halter = Halter.query.filter_by(email=email).first()
-    tier = Tier.query.filter_by(halter_id=halter.halter_id).first() if halter else None
+    tier = Tier.query.filter_by(halter_id=halter.halter_id).one() if halter else None
 
     if request.method == 'POST':
         # Adresse zusammenbauen
