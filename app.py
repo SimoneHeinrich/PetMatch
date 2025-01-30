@@ -111,7 +111,7 @@ def feed():
     if halter:
         tier_existiert = Tier.query.filter_by(halter_id=halter.halter_id).first() is not None
 
-    # Falls Halter oder Tier nicht existieren, keine Beiträge anzeigen
+    # Nur wenn Halter UND Tier existieren, Beiträge anzeigen
     beitraege = []
     if halter_existiert and tier_existiert:
         beitraege = db.session.query(
@@ -222,14 +222,15 @@ def beitraege_erstellen():
     if 'email' not in session:
         return redirect(url_for('anmeldung'))
     
+    # Email des Halters abrufen
     email = session['email']
     halter = Halter.query.filter_by(email=email).first()
 
     if not halter:
         return "Kein Halter gefunden. Bitte erstelle dein Profil."
     
-    # Tier des Halters abrufen (hier wird angenommen, dass ein Halter mindestens ein Tier hat)
-    tier = Tier.query.filter_by(halter_id=halter.halter_id).first()
+    # Tier des Halters abrufen (jeder Halter hat genau ein Tier)
+    tier = Tier.query.filter_by(halter_id=halter.halter_id).one()
 
     if not tier:
         return "Kein Tier gefunden. Bitte erstelle ein Profil mit einem Tier."
@@ -276,7 +277,7 @@ def impressum():
 def datenschutz():
     return render_template("datenschutz.html", title="Datenschutz")
 
-# Prüfe, ob das Skript direkt ausgeführt wird (nicht importiert)
+# Prüft, ob das Skript direkt ausgeführt wird (nicht importiert)
 if __name__ == "__main__":
     # Erstellt alle Tabellen (falls sie noch nicht existieren)
     with app.app_context():
