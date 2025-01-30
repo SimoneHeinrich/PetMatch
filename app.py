@@ -88,17 +88,42 @@ def anmeldung():
 def kontakt():
     return render_template("kontakt.html", title="Kontakt")
 
+# Feed
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
-    menu_open = False
+    menu_open = False  # Standardmäßig ist das Menü geschlossen
+
     if request.method == 'POST':
-        # Wenn der Benutzer auf das Bild klickt, Menü öffnen
         if 'open_menu' in request.form:
-            menu_open = True
-        # Wenn der Benutzer "Menü schließen" klickt, Menü schließen
+            menu_open = True  # Menü öffnen
         elif 'close_menu' in request.form:
-            menu_open = False
-    return render_template('feed.html', menu_open=menu_open)
+            menu_open = False  # Menü schließen
+
+    if 'email' not in session:
+        return redirect(url_for('anmeldung'))
+
+    email = session['email']
+    halter = Halter.query.filter_by(email=email).first()
+    halter_existiert = halter is not None
+
+    # Überprüfen, ob der Nutzer ein Tier hat
+    tier_existiert = False
+    if halter:
+        tier_existiert = Tier.query.filter_by(halter_id=halter.halter_id).first() is not None
+
+    # Falls Halter oder Tier nicht existieren, keine Beiträge anzeigen
+    beitraege = []
+    if halter_existiert and tier_existiert:
+        beitraege = db.session.query(
+            Feedbeitrag.titel,
+            Feedbeitrag.inhalt,
+            Feedbeitrag.erstellt_am,
+            Tier.tier_name.label('tier_name')
+        ).join(Halter, Feedbeitrag.halter_id == Halter.halter_id) \
+        .join(Tier, Feedbeitrag.tier_id == Tier.tier_id) \
+        .order_by(Feedbeitrag.erstellt_am.desc()).all()
+
+    return render_template('feed.html', menu_open=menu_open, beitraege=beitraege, halter_existiert=halter_existiert, tier_existiert=tier_existiert)
 
 
 # Route für 'Profil anzeigen'

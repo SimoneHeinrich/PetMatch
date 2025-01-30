@@ -1,40 +1,73 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Du bist eingeloggt</h2>
-<p>Hier können Sie Spielkameraden für Ihr Haustier finden</p>
 
-<!-- Formular, das beim Klicken auf das Bild abgeschickt wird -->
-<form method="POST" action="{{ url_for('feed') }}">
-    <div class="d-flex justify-content-end mt-5">
-        <button type="submit" name="open_menu" style="background: none; border: none;">
-            <img src="static/bilder/profilbild-platzhalter.png" class="rounded" alt="Profilbild">
-        </button>
+<body class="seite-feed">
+    <h2 class="text-center my-4">Feedbeiträge</h2>
+
+    <!-- Profilbild mit Logout-Button darunter -->
+    <div class="d-flex flex-column align-items-end mt-5">
+        <!-- Button für das ausklappbare Menü -->
+        <form method="POST" action="{{ url_for('feed') }}">
+            <button type="submit" name="open_menu" style="background: none; border: none;">
+                <img src="{{ url_for('static', filename='bilder/profilbild-platzhalter.png') }}" class="rounded" alt="Profilbild" style="width: 100px;">
+            </button>
+        </form>
+
+        <!-- Logout-Button direkt unter dem Profilbild -->
+        <form method="POST" action="{{ url_for('logout') }}" class="mt-2">
+            <button type="submit" class="btn btn-primary" style="width: 200px;">Ausloggen</button>
+        </form>
     </div>
-</form>
 
-<!-- Menü, das angezeigt wird, wenn menu_open=True -->
-{% if menu_open %}
-    <div id="menu" class="dropdown-menu">
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='bilder/profil-icon.png') }}" alt="Profil anzeigen" class="menu-icon">
+    <!-- Menü, falls geöffnet -->
+    {% if menu_open %}
+    <div id="menu" class="dropdown-menu show" style="position: absolute; right: 20px; top: 120px; background-color: white; border: 1px solid #ddd; padding: 10px; width: 220px;">
+        <div class="menu-item d-flex align-items-center">
+            <img src="{{ url_for('static', filename='bilder/profil-icon.png') }}" alt="Profil anzeigen" class="menu-icon" style="width: 24px; margin-right: 10px;">
             <a class="dropdown-item" href="{{ url_for('profil_anzeigen') }}">Profil anzeigen</a>
         </div>
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='bilder/profil-bearbeiten-icon.png') }}" alt="Profil bearbeiten" class="menu-icon">
+        <div class="menu-item d-flex align-items-center">
+            <img src="{{ url_for('static', filename='bilder/profil-bearbeiten-icon.png') }}" alt="Profil bearbeiten" class="menu-icon" style="width: 24px; margin-right: 10px;">
             <a class="dropdown-item" href="{{ url_for('profil_bearbeiten') }}">Profil bearbeiten</a>
         </div>
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='bilder/beitraege-icon.png') }}" alt="Beitrag erstellen" class="menu-icon">
+        <div class="menu-item d-flex align-items-center">
+            <img src="{{ url_for('static', filename='bilder/beitraege-icon.png') }}" alt="Beitrag erstellen" class="menu-icon" style="width: 24px; margin-right: 10px;">
             <a class="dropdown-item" href="{{ url_for('beitraege_erstellen') }}">Beitrag erstellen</a>
         </div>
-
-        <!-- Menü schließen, als normaler Menüeintrag -->
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='bilder/close-icon.png') }}" class="menu-icon" alt="Menü schließen">
+        <div class="menu-item d-flex align-items-center">
+            <img src="{{ url_for('static', filename='bilder/close-icon.png') }}" alt="Menü schließen" class="menu-icon" style="width: 24px; margin-right: 10px;">
             <a class="dropdown-item" href="{{ url_for('feed') }}">Menü schließen</a>
         </div>
     </div>
+    {% endif %}
+
+   <!-- Falls kein Halter- oder Tier-Profil existiert, Hinweis anzeigen -->
+{% if not halter_existiert or not tier_existiert %}
+<div class="alert alert-warning text-center" style="background-color: yellow; padding: 10px; margin: 20px auto; max-width: 80%;">
+    <strong>Ihre Halter- oder Tierdaten fehlen.</strong> Bitte 
+    <a href="{{ url_for('profil_bearbeiten') }}" class="alert-link">bearbeiten Sie Ihr Profil</a>, um den Feed anzuzeigen.
+</div>
 {% endif %}
+
+<!-- Beiträge mit Scrollbar, werden nur angezeigt, wenn Halter- und Tierdaten existieren -->
+{% if halter_existiert and tier_existiert %}
+<div class="container mt-4">
+    <div class="feed-container" style="max-height: 600px; overflow-y: auto; padding: 10px; border: 1px solid #ddd;">
+        {% for beitrag in beitraege %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ beitrag.titel }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Von {{ beitrag.tier_name }} am {{ beitrag.erstellt_am.strftime('%d.%m.%Y') }}</h6>
+                <p class="card-text">{{ beitrag.inhalt }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+</body>
 
 {% endblock %}
