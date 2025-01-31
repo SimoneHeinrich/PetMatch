@@ -1,4 +1,4 @@
-# **UI-Komponenten - Figma Prototyp**
+# **Figma Prototyp**
 
 ## **Einleitung**
 Diese Dokumentation beschreibt die Einbindung des interaktiven Figma-Prototyps zur Präsentation der UI/UX-Gestaltung des Projekts. Der Prototyp wurde entwickelt, um eine vollständige Präsentation der Nutzerreise zu ermöglichen. Durch die direkte Integration in die technische Dokumentation wird der Entwicklungsprozess nachvollziehbar dargestellt.
