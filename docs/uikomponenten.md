@@ -1,9 +1,3 @@
----
-title: UI-Komponenten - Figma Prototyp
-parent: Technische Dokumente
-nav_order: 7
----
-
 # **UI-Komponenten - Figma Prototyp**
 
 ## **Einleitung**
