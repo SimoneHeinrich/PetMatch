@@ -33,7 +33,7 @@ Falls der iFrame nicht funktioniert oder eine größere Ansicht benötigt wird, 
 - **Browser-Sicherheitsrichtlinien**: Einige Plattformen blockieren externe iFrames. Lösung: Bereitstellung eines Direktlinks.
 - **Responsive Darstellung**: Die Größe des iFrames wurde so gewählt, dass eine optimale Ansicht auf verschiedenen Bildschirmgrößen gewährleistet ist.
 
-## **Weiterführende Dokumentation**
+## **Quellen**
 - [Figma Embed Dokumentation](https://www.figma.com/developers/embed#overview)
 - [MDN Web Docs – iFrame](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe)
 
