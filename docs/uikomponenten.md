@@ -1,7 +1,7 @@
 # **Figma Prototyp**
 
 ## **Einleitung**
-Diese Dokumentation beschreibt die Einbindung des interaktiven Figma-Prototyps zur Präsentation der UI/UX-Gestaltung des Projekts. Der Prototyp wurde entwickelt, um eine vollständige Präsentation der Nutzerreise zu ermöglichen. Durch die direkte Integration in die technische Dokumentation wird der Entwicklungsprozess nachvollziehbar dargestellt.
+Diese Dokumentation beschreibt die Einbindung des interaktiven Figma-Prototyps zur Präsentation der UI/UX-Gestaltung des Projekts. Der Prototyp wurde entwickelt, um eine vollständige Präsentation der Nutzerreise zu ermöglichen. Durch die direkte Integration in die Dokumentation wird der Entwicklungsprozess nachvollziehbar dargestellt.
 
 ## **Interaktiver Prototyp**
 
@@ -38,5 +38,5 @@ Falls der iFrame nicht funktioniert oder eine größere Ansicht benötigt wird, 
 - [MDN Web Docs – iFrame](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe)
 
 ## **Fazit**
-Die Integration des Figma-Prototyps in die technische Dokumentation ermöglicht eine transparente und interaktive Präsentation der Benutzeroberfläche. Durch die frühzeitige Visualisierung wird sichergestellt, dass das Design den funktionalen Anforderungen entspricht und potenzielle Usability-Probleme rechtzeitig erkannt werden.
+Die Integration des Figma-Prototyps in die Dokumentation ermöglicht eine transparente und interaktive Präsentation der Benutzeroberfläche. Durch die frühzeitige Visualisierung wird sichergestellt, dass das Design den funktionalen Anforderungen entspricht und die Funktionalität der Web-App visualisert werden konnte.
 
