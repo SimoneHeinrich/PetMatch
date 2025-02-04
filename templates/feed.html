@@ -5,7 +5,7 @@
 <body class="seite-feed">
     <h2 class="text-center my-4">Feedbeiträge</h2>
 
-    <!-- Profilbild mit Logout-Button darunter -->
+    <!-- Profilbild mit Logout-Button und neu platziertem Filter-Formular -->
     <div class="d-flex flex-column align-items-end mt-5">
         <!-- Button für das ausklappbare Menü -->
         <form method="POST" action="{{ url_for('feed') }}">
@@ -18,6 +18,17 @@
         <form method="POST" action="{{ url_for('logout') }}" class="mt-2">
             <button type="submit" class="btn btn-primary" style="width: 200px;">Ausloggen</button>
         </form>
+
+        <!-- Filterradius -->
+        <form method="POST" action="{{ url_for('feed') }}" class="mt-3">
+            <div class="d-flex align-items-center">
+                <label for="filter_radius" class="me-2">Filterradius</label>
+                <input type="number" min="1" class="form-control me-2" id="filter_radius" name="filter_radius"
+                       placeholder="in km" style="width: 100px;">
+                <button type="submit" name="apply_filter" class="btn btn-secondary">jetzt filtern</button>
+            </div>
+        </form>
+        
     </div>
 
     <!-- Menü, falls geöffnet -->
@@ -42,31 +53,30 @@
     </div>
     {% endif %}
 
-   <!-- Falls kein Halter- oder Tier-Profil existiert, Hinweis anzeigen -->
-{% if not halter_existiert or not tier_existiert %}
-<div class="alert alert-warning text-center" style="background-color: yellow; padding: 10px; margin: 20px auto; max-width: 80%;">
-    <strong>Ihre Halter- oder Tierdaten fehlen.</strong> Bitte 
-    <a href="{{ url_for('profil_bearbeiten') }}" class="alert-link">bearbeiten Sie Ihr Profil</a>, um den Feed anzuzeigen.
-</div>
-{% endif %}
-
-<!-- Beiträge mit Scrollbar, werden nur angezeigt, wenn Halter- und Tierdaten existieren -->
-{% if halter_existiert and tier_existiert %}
-<div class="container mt-4">
-    <div class="feed-container" style="max-height: 600px; overflow-y: auto; padding: 10px; border: 1px solid #ddd;">
-        {% for beitrag in beitraege %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ beitrag.titel }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Von {{ beitrag.tier_name }} am {{ beitrag.erstellt_am.strftime('%d.%m.%Y') }}</h6>
-                <p class="card-text">{{ beitrag.inhalt }}</p>
-            </div>
-        </div>
-        {% endfor %}
+    <!-- Falls kein Halter- oder Tier-Profil existiert, Hinweis anzeigen -->
+    {% if not halter_existiert or not tier_existiert %}
+    <div class="alert alert-warning text-center" style="background-color: yellow; padding: 10px; margin: 20px auto; max-width: 80%;">
+        <strong>Ihre Halter- oder Tierdaten fehlen.</strong> Bitte 
+        <a href="{{ url_for('profil_bearbeiten') }}" class="alert-link">bearbeiten Sie Ihr Profil</a>, um den Feed anzuzeigen.
     </div>
-</div>
-{% endif %}
+    {% endif %}
 
+    <!-- Beiträge mit Scrollbar, werden nur angezeigt, wenn Halter- und Tierdaten existieren -->
+    {% if halter_existiert and tier_existiert %}
+    <div class="container mt-4">
+        <div class="feed-container" style="max-height: 600px; overflow-y: auto; padding: 10px; border: 1px solid #ddd;">
+            {% for beitrag in beitraege %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ beitrag.titel }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Von {{ beitrag.tier_name }} am {{ beitrag.erstellt_am.strftime('%d.%m.%Y') }}</h6>
+                    <p class="card-text">{{ beitrag.inhalt }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 
 </body>
 
