@@ -607,5 +607,19 @@ Durch die Aufnahme des `instance/`-Ordners ins Repository wird die Einrichtung d
 - Interne Diskussion im Team am 04. Februar 2025
 - Erfahrungen mit vorheriger `.gitignore`-Konfiguration
 
+---
+
+# Filterung durch Eingabefeld oder Schieberegler
+
+## Meta
+- **Status:** Abgeschlossen  
+- **Entscheidung getroffen von:** Patryk Kujawski 
+- **Erstellt:** 04. Februar 2025  
+## Problemstellung
+Wir haben uns im Projekt entschieden den Nutzer die Möglichkeit zu geben Beiträge nach Radius zu filtern, dies bedeutet, wenn der Nutzer einen bestimmten Radius eingibt, sollen ihn nur die Beiträge von Haltern in diesen Radius angezeigt werden. Am Anfang wollten wir einen Schieberegler (wie in der Präsentation gezeigt einbauen) jedoch habe ich mich dagegen entschieden. 
+## Entscheidung
+Ausfolgenden Gründen haben ich mich gegen einen Schieberegler entschieden und ein Eingabefeld bevorzugt. 
+- **Bessere Optik:** Meiner Meinung nach passt ein Eingabefeld optisch besser in unser Projekt als ein Schieberegler.
+- **Benutzerfreundlichkeit:** Bei einem Schiebregler müsste man einen Maxwert eingeben und Sprünge wie viele Kilometer eine Verschiebung ist. Ich bin der Meinung für den Nutzer ist es besser und angenehmer, wenn er eine genaue Zahl (Kilometer) eingeben kann und nicht limitiert wird durch eine Eingrenzung von uns. 
 
 
