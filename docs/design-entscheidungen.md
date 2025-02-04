@@ -547,4 +547,65 @@ Die API-Integration konnte direkt in der bestehenden `profil_bearbeiten`-Route u
 
 Die Standardrouten wie Datenschutz, Impressum und Kontakt bleiben Teil der geplanten Architektur und wurden entsprechend integriert.
 
+## Designentscheidung: Aufnahme des `instance/`-Ordners ins Repository
+
+### Meta
+- **Status:** Entschieden
+- **Datum:** 04. Februar 2025
+- **Entscheidung getroffen von:** Simone Heinrich, Patryk Kujawski
+
+---
+
+### Problemstellung
+
+Bisher wurde der `instance/`-Ordner durch die `.gitignore`-Datei vom Repository ausgeschlossen. Dadurch wurde die SQLite-Datenbank nicht mit gepusht, und alle Nutzer mussten die Datenbank lokal mit `flask init-db` initialisieren. Dies führte zu mehreren Herausforderungen:
+
+1. **Unterschiedliche Testumgebungen:** Jeder musste eigene Testdaten manuell einfügen.
+2. **Aufwendige Einrichtung für den Professor:** Ohne voreingestellte Daten muss der Professor erst eigene Testdaten anlegen, um bestimmte Funktionen (z. B. Radius-Filterung) nachvollziehen zu können.
+3. **Mehr Verwaltungsaufwand:** Das Einfügen von Beispiel-Daten per separater Route `/insert/sample` wäre eine Alternative gewesen, aber nicht so direkt und intuitiv.
+
+
+---
+
+### Entscheidung
+
+Wir haben uns entschieden, den `instance/`-Ordner aus der `.gitignore`-Datei zu entfernen und die Datenbank mit bereits bestehenden Testdaten direkt ins Repository aufzunehmen.
+
+---
+
+### Begründung
+
+| **Kriterium**                  | **Ausschluss von `instance/`** | **Aufnahme von `instance/`**  |
+|--------------------------------|--------------------------------|--------------------------------|
+| **Einfachheit der Einrichtung** | ❌ Jeder Nutzer muss eigene Testdaten anlegen. | ✔️ Professor und andere Nutzer können die App direkt ausführen und haben bereits funktionierende Testdaten. |
+| **Testbarkeit der Anwendung**  | ❌ Radius-Funktion kann erst getestet werden, wenn Daten manuell eingefügt wurden. | ✔️ Alle wichtigen Tests können sofort nach der Registrierung durchgeführt werden. |
+| **Einheitliche Umgebung**      | ❌ Jeder arbeitet mit einer eigenen, nicht synchronisierten Datenbank. | ✔️ Alle Nutzer arbeiten mit der gleichen Datenbank und Testdaten. |
+| **Komplexität**                | ❌ Höhere Fehleranfälligkeit, da Testdaten möglicherweise vergessen oder unterschiedlich angelegt werden. | ✔️ Geringerer Aufwand, da alle mit denselben Datensätzen arbeiten. |
+| **Skalierbarkeit**             | ❌ Falls später mehr Nutzer hinzukommen, müssen sie ebenfalls eine eigene Datenbank initialisieren. | ✔️ Neue Nutzer können sofort loslegen, ohne zusätzliche Einrichtung. |
+
+
+---
+
+### Umsetzung
+
+1. **`instance/`-Ordner aus `.gitignore` entfernen**
+   - Die Zeile `instance/` wird aus der `.gitignore`-Datei gelöscht.
+
+2. **SQLite-Datenbank mit Testdaten befüllen**
+   - Eine vorbereitete `petmatch.db` wird ins Repository gepusht, die bereits Testnutzer, Beiträge und Halter enthält.
+
+3. **Professor erhält eine vorkonfigurierte Umgebung**
+   - Nach dem Klonen des Repos kann er sich einfach registrieren und hat direkt Zugriff auf die vordefinierten Testdaten.
+
+---
+
+### Zusammenfassung
+
+Durch die Aufnahme des `instance/`-Ordners ins Repository wird die Einrichtung der App erheblich vereinfacht. Die SQLite-Datenbank mit vordefinierten Nutzern, Beiträgen und Haltern ermöglicht eine einheitliche Testumgebung und spart Zeit. Dadurch kann der Professor sofort mit dem Testen beginnen, ohne erst eigene Daten anlegen zu müssen. Die Entscheidung trägt dazu bei, das Projekt effizienter und benutzerfreundlicher zu gestalten.
+
+### Quellen
+- Interne Diskussion im Team am 04. Februar 2025
+- Erfahrungen mit vorheriger `.gitignore`-Konfiguration
+
+
 
