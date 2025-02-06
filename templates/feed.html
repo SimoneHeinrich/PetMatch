@@ -36,7 +36,7 @@
     <div id="menu" class="dropdown-menu show" style="position: absolute; right: 20px; top: 120px; background-color: white; border: 1px solid #ddd; padding: 10px; width: 220px;">
         <div class="menu-item d-flex align-items-center">
             <img src="{{ url_for('static', filename='bilder/profil-icon.png') }}" alt="Profil anzeigen" class="menu-icon" style="width: 24px; margin-right: 10px;">
-            <a class="dropdown-item" href="{{ url_for('profil_anzeigen') }}">Profil anzeigen</a>
+            <a class="dropdown-item" href="{{ url_for('profil_anzeigen', tier_id=tier_id) }}">Profil anzeigen</a>
         </div>
         <div class="menu-item d-flex align-items-center">
             <img src="{{ url_for('static', filename='bilder/profil-bearbeiten-icon.png') }}" alt="Profil bearbeiten" class="menu-icon" style="width: 24px; margin-right: 10px;">

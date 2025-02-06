@@ -1,7 +1,63 @@
-{% extends "base.html" %}
+{% extends "base.html" %} <!-- Erbt von base.html -->
 
 {% block content %}
-<h2>Profil anzeigen</h2>
-<p>Hier kannst du deine Profilinformationen sehen.</p>
-<!-- Weitere Inhalte für das Profil anzeigen -->
+
+<body class="seite-profil-anzeigen"> 
+    <h2 class="text-center my-4">Profil anzeigen</h2>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Profilbild mit Dropdown-Menü -->
+            <div class="col-md-4 text-center d-flex flex-column align-items-center">
+                <img src="{{ url_for('static', filename='bilder/profilbild-platzhalter.png') }}" 
+                     alt="Tierbild" class="img-fluid" 
+                     style="border: 1px solid #ccc; border-radius: 10px; width: 100%;">
+            </div>
+
+            <!-- Tierdaten -->
+            <div class="col-md-8">
+                <h4 class="mb-3">Tier</h4>
+
+                <div class="mb-3">
+                    <label class="form-label">Name:</label>
+                    <p class="form-control-plaintext">{{ tier.tier_name }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Geburtsdatum:</label>
+                    <p class="form-control-plaintext">
+                        {{ tier.geburtsdatum.strftime('%d.%m.%Y') if tier.geburtsdatum else 'Nicht angegeben' }}
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Rasse:</label>
+                    <p class="form-control-plaintext">{{ tier.rasse }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Kastriert:</label>
+                    <p class="form-control-plaintext">
+                        {% if tier.kastriert == 'ja' %}Ja{% elif tier.kastriert == 'nein' %}Nein{% else %}Nicht angegeben{% endif %}
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Das mag ich:</label>
+                    <p class="form-control-plaintext">{{ tier.das_mag_ich if tier.das_mag_ich else 'Keine Angaben' }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Das mag ich nicht:</label>
+                    <p class="form-control-plaintext">{{ tier.das_mag_ich_nicht if tier.das_mag_ich_nicht else 'Keine Angaben' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zurück-Button -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('feed') }}" class="btn btn-secondary" style="width: 200px;">Zurück</a>
+        </div>
+    </div>
+</body>
 {% endblock %}

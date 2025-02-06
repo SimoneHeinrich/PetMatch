@@ -9,14 +9,14 @@
     <div class="container mt-5">
         <!-- Formular für das Bearbeiten eines Profils -->
         <form method="post" action="/profil_bearbeiten" enctype="multipart/form-data">
-            <!-- multipart für Bild-Upload -->
             <div class="row">
                 <!-- Bild und Bearbeiten-Button -->
                 <div class="col-md-4 text-center d-flex flex-column align-items-center">
-                    <button type="button" class="btn btn-secondary mb-3">Bearbeiten</button>
+                    <button type="button" class="btn btn-secondary mb-3">Bild bearbeiten</button>
                     <img src="{{ url_for('static', filename='bilder/profilbild-platzhalter.png') }}" alt="Profilbild"
                         class="img-fluid" style="border: 1px solid #ccc; border-radius: 10px;">
                 </div>
+
                 <!-- Eingabefelder: Tierdaten -->
                 <div class="col-md-8">
                     <h4 class="mb-3">Tier</h4>
@@ -41,10 +41,12 @@
 
                     <div class="mb-3">
                         <label for="kastriert" class="form-label">Kastriert:</label>
-                        <select class="form-control" id="kastriert" name="kastriert" >
-                            <option value="" {% if not tier or not tier.kastriert %}selected{% endif %}>Bitte wählen</option>
-                            <option value="ja" {% if tier and tier.kastriert == 'ja' %}selected{% endif %}>Ja</option>
-                            <option value="nein" {% if tier and tier.kastriert == 'nein' %}selected{% endif %}>Nein</option>
+                        <select class="form-control" id="kastriert" name="kastriert">
+                            <option value="" {% if not tier or not tier.kastriert %}selected{% endif %}>Bitte wählen
+                            </option>
+                            <option value="ja" {% if tier and tier.kastriert=='ja' %}selected{% endif %}>Ja</option>
+                            <option value="nein" {% if tier and tier.kastriert=='nein' %}selected{% endif %}>Nein
+                            </option>
                         </select>
                     </div>
 
@@ -94,20 +96,29 @@
                     <div class="mb-3">
                         <label for="geschlecht" class="form-label">Geschlecht:</label>
                         <select class="form-control" id="geschlecht" name="geschlecht">
-                            <option value="" {% if not halter or not halter.geschlecht %}selected{% endif %}>Bitte wählen</option>
-                            <option value="männlich" {% if halter and halter.geschlecht == 'männlich' %}selected{% endif %}>Männlich</option>
-                            <option value="weiblich" {% if halter and halter.geschlecht == 'weiblich' %}selected{% endif %}>Weiblich</option>
-                            <option value="divers" {% if halter and halter.geschlecht == 'divers' %}selected{% endif %}>Divers</option>
+                            <option value="" {% if not halter or not halter.geschlecht %}selected{% endif %}>Bitte
+                                wählen</option>
+                            <option value="männlich" {% if halter and halter.geschlecht=='männlich' %}selected{% endif
+                                %}>Männlich</option>
+                            <option value="weiblich" {% if halter and halter.geschlecht=='weiblich' %}selected{% endif
+                                %}>Weiblich</option>
+                            <option value="divers" {% if halter and halter.geschlecht=='divers' %}selected{% endif %}>
+                                Divers</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <!-- Button zum Abschicken -->
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary" style="width: 200px;">Speichern</button>
+            <!-- Buttons für "Beitrag erstellen" und "Speichern" -->
+            <div class="row mt-4">
+                <div class="col-md-12 text-end">
+                    <!-- Beitrag erstellen Button -->
+                    <a href="{{ url_for('beitraege_erstellen') }}" class="btn btn-outline-dark me-3">Beitrag
+                        erstellen</a>
+                    <!-- Speichern Button -->
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                </div>
             </div>
-        </form>
     </div>
 </body>
 {% endblock %}

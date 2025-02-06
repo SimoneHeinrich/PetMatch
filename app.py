@@ -107,9 +107,11 @@ def feed():
     halter_existiert = halter is not None
 
     # Überprüfen, ob der Nutzer ein Tier hat
+    tier = None
     tier_existiert = False
     if halter:
-        tier_existiert = Tier.query.filter_by(halter_id=halter.halter_id).one() is not None
+        tier = Tier.query.filter_by(halter_id=halter.halter_id).first()
+        tier_existiert = tier is not None
 
     # Nur wenn Halter UND Tier existieren, Beiträge anzeigen
     beitraege = []
@@ -118,19 +120,28 @@ def feed():
             Feedbeitrag.titel,
             Feedbeitrag.inhalt,
             Feedbeitrag.erstellt_am,
-            Tier.tier_name.label('tier_name')
+            Tier.tier_name.label('tier_name'),
+            Tier.tier_id  # Hier die tier_id mitgeben
         ).join(Halter, Feedbeitrag.halter_id == Halter.halter_id) \
         .join(Tier, Feedbeitrag.tier_id == Tier.tier_id) \
         .order_by(Feedbeitrag.erstellt_am.desc()).all()
 
-    return render_template('feed.html', menu_open=menu_open, beitraege=beitraege, halter_existiert=halter_existiert, tier_existiert=tier_existiert)
+    return render_template('feed.html', 
+                           menu_open=menu_open, 
+                           beitraege=beitraege, 
+                           halter_existiert=halter_existiert, 
+                           tier_existiert=tier_existiert, 
+                           tier_id=tier.tier_id if tier else None)
+
+@app.route("/profil_anzeigen/<int:tier_id>")
+def profil_anzeigen(tier_id):
+    tier = Tier.query.get(tier_id)
+    if not tier:
+        return "Tier nicht gefunden", 404
+
+    return render_template("profil_anzeigen.html", title="Profil anzeigen", tier=tier)
 
 
-# Route für 'Profil anzeigen'
-@app.route("/profil_anzeigen")
-def profil_anzeigen():
-    # Logik hinzufügen, um Benutzerdaten zu laden 
-    return render_template("profil_anzeigen.html", title="Profil anzeigen")
 
 # Route für 'Profil bearbeiten'
 @app.route("/profil_bearbeiten", methods=['GET', 'POST'])
