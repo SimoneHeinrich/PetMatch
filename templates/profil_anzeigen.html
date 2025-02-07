@@ -2,16 +2,15 @@
 
 {% block content %}
 
-<body class="seite-profil-anzeigen"> 
+<body class="seite-profil-anzeigen">
     <h2 class="text-center my-4">Profil anzeigen</h2>
 
     <div class="container mt-5">
         <div class="row">
             <!-- Profilbild mit Dropdown-Menü -->
             <div class="col-md-4 text-center d-flex flex-column align-items-center">
-                <img src="{{ url_for('static', filename='bilder/profilbild-platzhalter.png') }}" 
-                     alt="Tierbild" class="img-fluid" 
-                     style="border: 1px solid #ccc; border-radius: 10px; width: 100%;">
+                <img src="{{ url_for('static', filename='bilder/profilbild-platzhalter.png') }}" alt="Tierbild"
+                    class="img-fluid" style="border: 1px solid #ccc; border-radius: 10px; width: 100%;">
             </div>
 
             <!-- Tierdaten -->
@@ -31,6 +30,13 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Geschlecht:</label>
+                    <p class="form-control-plaintext">{{ tier.geschlecht if tier.geschlecht else 'Nicht angegeben' }}
+                    </p>
+                </div>
+
+
+                <div class="mb-3">
                     <label class="form-label">Rasse:</label>
                     <p class="form-control-plaintext">{{ tier.rasse }}</p>
                 </div>
@@ -38,18 +44,21 @@
                 <div class="mb-3">
                     <label class="form-label">Kastriert:</label>
                     <p class="form-control-plaintext">
-                        {% if tier.kastriert == 'ja' %}Ja{% elif tier.kastriert == 'nein' %}Nein{% else %}Nicht angegeben{% endif %}
+                        {% if tier.kastriert == 'ja' %}Ja{% elif tier.kastriert == 'nein' %}Nein{% else %}Nicht
+                        angegeben{% endif %}
                     </p>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Das mag ich:</label>
-                    <p class="form-control-plaintext">{{ tier.das_mag_ich if tier.das_mag_ich else 'Keine Angaben' }}</p>
+                    <p class="form-control-plaintext">{{ tier.das_mag_ich if tier.das_mag_ich else 'Keine Angaben' }}
+                    </p>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Das mag ich nicht:</label>
-                    <p class="form-control-plaintext">{{ tier.das_mag_ich_nicht if tier.das_mag_ich_nicht else 'Keine Angaben' }}</p>
+                    <p class="form-control-plaintext">{{ tier.das_mag_ich_nicht if tier.das_mag_ich_nicht else 'Keine
+                        Angaben' }}</p>
                 </div>
             </div>
         </div>

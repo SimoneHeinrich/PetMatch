@@ -27,6 +27,7 @@ class Tier(db.Model):
     tier_name = db.Column(db.String, nullable=False)
     rasse = db.Column(db.String, nullable=False)
     geburtsdatum = db.Column(db.Date)
+    geschlecht = db.Column(db.String, nullable=True) 
     das_mag_ich = db.Column(db.String)
     das_mag_ich_nicht = db.Column(db.String)
 

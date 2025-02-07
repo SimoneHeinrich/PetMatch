@@ -197,6 +197,7 @@ def profil_bearbeiten():
                     rasse=request.form.get('rasse'),
                     geburtsdatum=datetime.strptime(request.form.get('geburtsdatum'), '%Y-%m-%d').date()
                     if request.form.get('geburtsdatum') else None,
+                    geschlecht=request.form.get('geschlecht'),
                     das_mag_ich=request.form.get('das_mag_ich'),
                     das_mag_ich_nicht=request.form.get('das_mag_ich_nicht')
                 )
@@ -206,6 +207,7 @@ def profil_bearbeiten():
                 tier.rasse = request.form.get('rasse')
                 tier.geburtsdatum = datetime.strptime(request.form.get('geburtsdatum'), '%Y-%m-%d').date() \
                     if request.form.get('geburtsdatum') else None
+                tier.geschlecht = request.form.get('geschlecht')
                 tier.das_mag_ich = request.form.get('das_mag_ich')
                 tier.das_mag_ich_nicht = request.form.get('das_mag_ich_nicht')
 
