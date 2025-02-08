@@ -34,6 +34,19 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="geschlecht" class="form-label">Geschlecht:</label>
+                        <select class="form-control" id="geschlecht" name="geschlecht">
+                            <option value="" {% if not tier or not tier.geschlecht %}selected{% endif %}>Bitte wählen
+                            </option>
+                            <option value="männlich" {% if tier and tier.geschlecht=='männlich' %}selected{% endif %}>
+                                Männlich</option>
+                            <option value="weiblich" {% if tier and tier.geschlecht=='weiblich' %}selected{% endif %}>
+                                Weiblich</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
                         <label for="rasse" class="form-label">Rasse:</label>
                         <input type="text" class="form-control" id="rasse" name="rasse" required
                             value="{{ tier.rasse if tier else '' }}">
