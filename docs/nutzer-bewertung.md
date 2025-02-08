@@ -14,30 +14,37 @@ nav_order: 97
 {: toc }
 </details>
 
-## 01: [Name des Nutzers]
 
-### Meta
-
-Status
-: **In Arbeit** - Abgeschlossen - Veraltet
-
-Updated
-: DD-MMM-YYYY
+## Meta
+- **Status:** Abgeschlossen   
 
 ### Ziel
 
-[Beschreiben Sie das Ziel dieser Bewertung, z. B. als Forschungsfrage wie: "Wie lange dauert es, ein neues Konto zu registrieren, und wie hoch ist die Abbruchrate?"]
+Das Ziel ist es, die Benutzerfreundlichkeit unserer Webanwendung zu ermitteln und herauszufinden, wie man diese noch verbessern kann, um ein besseres Erlebnis für den Nutzer zu schaffen. 
 
 ### Methode
 
-[Beschreiben Sie, wie Sie vorgehen, um Ihr Bewertungsziel zu erreichen. Seien Sie so spezifisch wie möglich: Andere sollten Ihre Bewertung anhand der Beschreibung in diesem Abschnitt replizieren können.]
+Wir sind bei der Bewertung folgendermaßen vorgegangen. 
+
+**Teilnehmeranzahl:** Wir haben zwei Durchläufe mit drei Personen durchgeführt.
+
+**Test:** Die Teilnehmer wurden gebeten, die Webanwendung zu nutzen und uns für folgende drei Bereiche eine Bewertung zu geben. 
+
+- **1. Benutzeroberfläche:** Wie wirkt die Webanwendung optisch auf die Teilnehmer?
+- **2. Navigation:** Wie gut lässt es sich durch die Webanwendung navigieren und zu bestimmten Funktionen zu gelangen?
+- **3. Erwartung:** Wurde die Erwartung der Nutzer beim Benutzen der Webanwendung erfüllt?
+
+**Analyse:** Wir haben die Aussagen der Teilnehmer aufgeschrieben, die inhaltlichen Aussagen miteinander verglichen und sie in einen bündigen Text verfasst. 
 
 ### Ergebnisse
 
-[Präsentieren Sie die Hauptergebnisse Ihrer Bewertung, z. B.: "Im Durchschnitt benötigen Benutzer 3 Minuten, um sich zu registrieren. Die Abbruchrate betrug 70%. Benutzer, die den Vorgang nicht abgeschlossen haben, nannten folgende Gründe: ..."]
+**Benutzeroberfläche:** Das Logo wurde als sehr ansprechend empfunden, auch die Farbauswahl. Zum Teil waren auf manchen Screens zu wenig Inhalt und das wirkte leer. 
+
+**Navigation:** Die Navigation wird als sehr gut empfunden. Es ist sofort ersichtlich, wo sich welche Funktionen befinden und wohin sie beim Betätigen führen.
+
+**Erwartung:** Die Erwartungen wurden teilweise erfüllt. Was den Teilnehmern fehlt, ist die Möglichkeit, Bilder hochzuladen und Nachrichten zu schreiben. Die Idee eines Teilnehmers ist aufschlussreich: Er meinte, dass man die Beitragserstellung als Aufforderung zu einem Treffen sehen könnte, z. B.: „Ich bin heute um … am Ort … Wer will, kann gerne dazukommen.“ Ein Teilnehmer fand die AGB störend, da sie zu offensichtlich dargestellt werden. Zudem wurde bemängelt, dass bei der erstmaligen Registrierung und Anmeldung die E-Mail-Adresse dreimal in kurzer Zeit eingegeben werden musste. Einem anderen Nutzer fiel auf, dass es keinen Zurück-Button im Profilbearbeitungsbereich gibt.
+
 
 ### Konsequenzen
 
-[Was haben Sie aus dieser Bewertung gelernt, und was werden Sie ändern, um sich zu verbessern? Beispiel: "Wir beabsichtigen, die Abbruchrate zu senken, indem wir nicht nach dem Geburtsdatum fragen. Wir werden diese Bewertung erneut durchführen, um die Auswirkungen zu messen."]
-
----
+Die angesprochenen Probleme werden wir probieren zu verbessern, jedoch könnte sich das als schwierig erweisen aufgrund der vorgegeben Deadline, alle angesprochenen Punkte sind nicht in unserem MVP als Priorität gekennzeichnet. 
