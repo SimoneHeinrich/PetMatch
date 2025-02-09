@@ -1,11 +1,10 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from db import db, Benutzer, Halter, Tier, Feedbeitrag, Bild #db.py importieren
 from datetime import datetime
 from geoapify import get_coordinates  # Importiere die Funktion aus geoapify.py
 import os
-
+import math
 
 app = Flask(__name__)
 
@@ -26,6 +25,30 @@ db.init_app(app)
 # Tabellen erstellen
 with app.app_context():
     db.create_all()
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    """
+    Berechnet die Entfernung in Kilometern zwischen zwei Punkten,
+    gegeben durch Breitengrad (lat) und Längengrad (lon),
+    anhand der Haversine-Formel.
+    """
+    R = 6371.0  # Radius in km
+
+    # Umwandlung von Grad in Radian
+    d_lat = math.radians(lat2 - lat1)
+    d_lon = math.radians(lon2 - lon1)
+
+    lat1_rad = math.radians(lat1)
+    lat2_rad = math.radians(lat2)
+
+    # Haversine-Formel
+    a = (math.sin(d_lat / 2)**2
+         + math.cos(lat1_rad)
+         * math.cos(lat2_rad)
+         * math.sin(d_lon / 2)**2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance = R * c
+    return distance
 
 # Ausloggen
 @app.route('/logout', methods=['POST'])
@@ -98,6 +121,15 @@ def feed():
             menu_open = True  # Menü öffnen
         elif 'close_menu' in request.form:
             menu_open = False  # Menü schließen
+        # Bei "jetzt filtern" wird die Filterradius Funktion aktiviert
+        filter_distance = None
+        if 'apply_filter' in request.form:
+            try:
+                filter_distance = float(request.form.get('filter_radius', ''))
+            except ValueError:
+                filter_distance = None
+    else:
+        filter_distance = None
 
     if 'email' not in session:
         return redirect(url_for('anmeldung'))
@@ -121,10 +153,29 @@ def feed():
             Feedbeitrag.inhalt,
             Feedbeitrag.erstellt_am,
             Tier.tier_name.label('tier_name'),
-            Tier.tier_id  # Hier die tier_id mitgeben
+            Tier.tier_id,  # Hier die tier_id mitgeben
+            Halter.breitengrad.label('halter_lat'),
+            Halter.laengengrad.label('halter_lon')
         ).join(Halter, Feedbeitrag.halter_id == Halter.halter_id) \
-        .join(Tier, Feedbeitrag.tier_id == Tier.tier_id) \
-        .order_by(Feedbeitrag.erstellt_am.desc()).all()
+         .join(Tier, Feedbeitrag.tier_id == Tier.tier_id) \
+         .order_by(Feedbeitrag.erstellt_am.desc()).all()
+        # filtern nach Entfernung
+        if filter_distance is not None and halter.breitengrad and halter.laengengrad:
+            user_lat = halter.breitengrad
+            user_lon = halter.laengengrad
+
+            gefilterte_beitraege = []
+            for b in beitraege:
+                # Koordinaten des Erstellers
+                dist = haversine_distance(user_lat, user_lon, b.halter_lat, b.halter_lon)
+                if dist <= filter_distance:
+                    gefilterte_beitraege.append((b, dist))
+
+            # Sortierung nach Entfernung 
+            gefilterte_beitraege.sort(key=lambda x: x[1])
+
+            # gefilterte Beiträge anzeigen
+            beitraege = [pair[0] for pair in gefilterte_beitraege]
 
     return render_template('feed.html', 
                            menu_open=menu_open, 
@@ -140,8 +191,6 @@ def profil_anzeigen(tier_id):
         return "Tier nicht gefunden", 404
 
     return render_template("profil_anzeigen.html", title="Profil anzeigen", tier=tier)
-
-
 
 # Route für 'Profil bearbeiten'
 @app.route("/profil_bearbeiten", methods=['GET', 'POST'])
@@ -225,8 +274,6 @@ def profil_bearbeiten():
         halter=halter,
         tier=tier
     )
-
-
 
 # Route für 'Beitrag erstellen'
 @app.route("/beitraege_erstellen", methods=['GET', 'POST'])
