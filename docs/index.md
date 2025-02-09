@@ -4,27 +4,35 @@ nav_order: 0
 ---
 
 
-# [Team 7 PetMatch]
+# Team 7 PetMatch
 
-[Prokt Beschreibung]
+PetMatch ist eine benutzerfreundliche Webanwendung, die das Haustier in den Mittelpunkt stellt. Unser Slogan **„Weil dein Tier Gesellschaft verdient“** unterstreicht diesen Fokus.
+
+Lediglich bei der Registrierung und beim Erstellen des Profils gibt der Halter einige persönliche Daten an. 
+Die Wohnadresse wird im Backend gespeichert und dient der Funktionalität der Plattform – insbesondere für die Filterung nach Entfernung. 
+Die eigentlichen Hauptakteure sind jedoch die Tiere: Die erstellten Profile und Beiträge beziehen sich ausschließlich auf sie. Der Halter übernimmt dabei die Rolle des Vermittlers.
+
+**Funktionen von PetMatch**
+
+Halter können im Namen ihrer Tiere Beiträge erstellen, die von anderen Hundehaltern angesehen, sortiert und nach Entfernung gefiltert werden können. 
+Klickt ein Nutzer auf einen Beitrag, gelangt er zum Profil des jeweiligen Hundes und findet dort die wichtigsten Informationen: Alter, Rasse, Geschlecht sowie Vorlieben und Abneigungen.
+
+Wenn man das Gefühl hat, dass sich die Hunde gut verstehen könnten, kann man den Halter direkt über die Plattform kontaktieren und ein Treffen zum gemeinsamen Spielen vereinbaren.
+
+**Unser Ziel**
+
+Hunde sind Rudeltiere – auch wenn sie gerne Zeit mit Menschen verbringen, ist der Kontakt zu Artgenossen für ihre Sozialisierung essenziell. 
+Durch regelmäßige Begegnungen lernen sie, sich sicher in ihrer Umwelt zu bewegen. PetMatch soll dabei helfen, passende Spielgefährten zu finden und die Vernetzung unter Hundehaltern zu erleichtern.
 
 ## Team members
 
-### [Simone Heinrich]
+### Simone Heinrich
 
-über
-:folgt im laufe des Projekts
+Matr.-Nr.: 77211956881
 
-Matr.-Nr.
-: 956881
+### Patryk Kujawski
 
-### [Patryk Kujawski]
-
-über
-:folgt im laufe des Projekts
-
-Matr.-Nr.
-: 961546
+Matr.-Nr.: 77211961546
 
 ## Eidesstattliche Erklärung
 
