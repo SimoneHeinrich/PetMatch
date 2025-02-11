@@ -81,7 +81,7 @@ def registrierung():
         try:
             db.session.add(neuer_benutzer)
             db.session.commit()
-            return redirect(url_for('index'))  # Weiterleitung nach erfolgreicher Registrierung
+            return redirect(url_for('anmeldung'))  # Weiterleitung nach erfolgreicher Registrierung
         except Exception as e:
             db.session.rollback()
             return f"Fehler bei der Registrierung: {e}"
