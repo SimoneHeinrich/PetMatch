@@ -3,18 +3,6 @@ title: Nutzerbewertung
 nav_order: 97
 ---
 
-
-{: .no_toc }
-# Nutzerbewertung
-
-<details open markdown="block">
-{: .text-delta }
-<summary>Table of contents</summary>
-+ ToC
-{: toc }
-</details>
-
-
 ## Meta
 - **Status:** Abgeschlossen   
 

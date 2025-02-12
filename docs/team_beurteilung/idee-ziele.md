@@ -4,15 +4,6 @@ parent: Team Beurteilung
 nav_order: 5
 ---
 
-<details open markdown="block">
-{: .text-delta }
-<summary>Table of contents</summary>
-+ ToC
-{: toc }
-</details>
-
-# Team 7: PetMatch
-
 # Team 7: PetMatch
 
 **Gruppe:**  
