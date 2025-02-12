@@ -8,3 +8,4 @@ nav_order: 3
 
 Hier ist das Entity-Relationship-Modell (ERM) für PetMatch:
 
+![ERM PetMatch](../Bilder/ermAktuell.png)
