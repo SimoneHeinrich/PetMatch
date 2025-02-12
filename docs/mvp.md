@@ -12,7 +12,7 @@ Die Webanwendung **PetMatch** ermöglicht es Nutzern, ihre Adresse einzugeben, d
 
 ## Funktionen im MVP
 
-### **Backend-Fokus**
+### Backend-Fokus
 1. **Benutzerregistrierung und -anmeldung**
    - Nutzer können sich registrieren und einloggen
    - Speicherung der Nutzerdaten in SQLite (z. B. E-Mail, Passwort)
@@ -29,7 +29,7 @@ Die Webanwendung **PetMatch** ermöglicht es Nutzern, ihre Adresse einzugeben, d
 
 ---
 
-### **UI-Fokus**
+### UI-Fokus
 1. **Responsives Grunddesign**
    - Einfache Navigation
    - Klare Struktur 
@@ -47,13 +47,13 @@ Die Webanwendung **PetMatch** ermöglicht es Nutzern, ihre Adresse einzugeben, d
 
 ## Aufgabenliste
 
-### **Backend**
+### Backend
 - [ ] SQLite-Datenbank erstellen und Tabellen für Nutzer, Adressen und Beiträge definieren.
 - [ ] Routen implementieren.
 - [ ] Geoapify-Integration zur Adressumwandlung einrichten (Route: `/api/konvertierte-adresse`).
 - [ ] Radius-Filter-Logik und Feed-Endpunkt implementieren (Route: `/api/feed`).
 
-### **Frontend**
+### Frontend
 - [ ] HTML-Formulare für Registrierung, Login und Mein Profil erstellen.
 - [ ] Adressformular mit POST-Request an das Backend implementieren.
 - [ ] Design der Seiten erweitern (Bootstrap).
