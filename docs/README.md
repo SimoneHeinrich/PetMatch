@@ -1,91 +1,168 @@
 # **PetMatch**
 
-PetMatch ist eine innovative App-Idee, die Tierhalter in ihrer Umgebung miteinander verbindet, um den Austausch zu fördern und gemeinsame Aktivitäten zu organisieren. Mit einem radiusbasierten Feed, der auf Adress- und GPS-Daten basiert, bietet die App eine Plattform für gezielte Interaktion und Unterstützung.
+Dieses Repository enthält den Quellcode und die Dokumentation für **PetMatch**, eine Webanwendung zur Vernetzung von Tierhaltern in der Umgebung. Die App ermöglicht es Nutzern, passende Spielgefährten für ihre Haustiere zu finden, indem Beiträge basierend auf Standortdaten gefiltert werden.
 
 ---
 
-## **Inhaltsverzeichnis**
-- [Beschreibung](#beschreibung)
-- [Features](#features)
-- [Technologien](#technologien)
-- [Dokumentation](#dokumentation)
-- [Installation](#installation)
-- [Status des Projekts](#status-des-projekts)
-- [Mitwirkende](#mitwirkende)
+## **Schritte zur Ausführung der Anwendung**
+
+### **Schritt 1: Repository klonen**
+Zuerst muss das Repository lokal geklont werden. Öffnen Sie ein Terminal und führen Sie folgenden Befehl aus:
+
+```bash
+git clone https://github.com/SimoneHeinrich/PetMatch.git
+cd PetMatch
+```
 
 ---
 
-## **Beschreibung**
-**Ziel:**  
-PetMatch wurde konzipiert, um Tierbesitzern eine Plattform zu bieten, auf der sie Erfahrungen teilen, Tipps austauschen und Treffen oder Aktivitäten organisieren können.
+### **Schritt 2: Virtuelle Python-Umgebung einrichten**
+Bevor Sie Abhängigkeiten installieren, richten Sie eine virtuelle Umgebung ein und aktivieren Sie diese:
 
-**Zielgruppe:**  
-- Tierhalter (z. B. Hundebesitzer, Katzenfreunde, Pferdeliebhaber).  
-
-**Wertversprechen:**  
-- Lokale Vernetzung für Tierhalter.  
-- Austausch von relevanten Informationen wie Pflegehinweisen, Tierarztempfehlungen oder Auslaufmöglichkeiten.  
-- Unterstützung bei der Organisation von Treffen mit anderen Tierhaltern.
+```bash
+python -m venv env
+source env/bin/activate  # Für macOS/Linux
+env\Scripts\activate     # Für Windows
+```
 
 ---
 
-## **Features**
-- **Benutzerprofile:** Nutzer können Profile für ihre Tiere und sich anlegen einschließlich Adressdaten.  
-- **Radiusbasierter Feed:** Beiträge werden basierend auf der geografischen Nähe gefiltert und angezeigt.  
-- **Multi-Tier-Verwaltung:** Ein Nutzer kann mehrere Tiere registrieren und verwalten.  
-- **Geodaten-Integration:** Adressdaten werden in GPS-Daten umgewandelt und in der Datenbank gespeichert.  
-- **Flexible Feed-Anpassung:** Der Radius für die Beitragsanzeige kann individuell angepasst werden.  
+### **Schritt 3: Erforderliche Pakete installieren**
+Installieren Sie alle benötigten Abhängigkeiten mit:
+
+```bash
+pip install -r requirements.txt
+```
+
+Falls Flask nicht installiert ist, führen Sie zusätzlich aus:
+
+```bash
+pip install flask
+```
+
+Überprüfen Sie, ob Flask erfolgreich installiert wurde:
+
+```bash
+pip list | findstr flask  # Windows
+pip list | grep flask     # macOS/Linux
+```
 
 ---
 
-## **Technologien**
-- **Frontend:** Geplant mit Flask und HTML/CSS.  
-- **Backend:** SQLite und Python.  
-- **Datenbank:** SQLite zur Verwaltung von Benutzer- und Beitragsdaten.  
-- **API:** Adress-zu-GPS-Daten-Umwandlung durch eine externe Geocoding-API (z. B. OpenCage).  
-- **Versionierung:** GitHub wird für die Versionskontrolle genutzt.  
+### **Schritt 4: Anwendung starten**
+Starten Sie die Anwendung: 
+
+```bash
+flask run
+```
+
+---
+
+### **Schritt 5: Anwendung öffnen**
+Nach dem Start kann die Anwendung im Browser aufgerufen werden unter:
+
+```
+http://127.0.0.1:5000/
+```
+
+---
+
+## **Registrierung und Anmeldung**
+
+### **Option 1: Eigene Registrierung**
+1. Rufen Sie die Registrierungsseite auf:
+   ```
+   http://127.0.0.1:5000/registrierung
+   ```
+2. Füllen Sie das Registrierungsformular aus:
+   - E-Mail-Adresse (zweimal eingeben)
+   - Benutzername wählen
+   - Passwort setzen
+   - Datenschutzerklärung bestätigen (Checkbox setzen)
+   - Auf **"Registrieren"** klicken
+3. Nach erfolgreicher Registrierung erfolgt eine Weiterleitung zur Anmeldeseite:
+   ```
+   http://127.0.0.1:5000/anmeldung
+   ```
+4. Melden Sie sich anschließend mit Ihrer E-Mail und Ihrem Passwort an.
+
+---
+
+### **Option 2: Nutzung eines Testaccounts**
+Falls keine Registrierung erfolgen soll, kann folgender Testaccount verwendet werden:
+
+- **E-Mail:** `Admin1999@web.de`
+- **Passwort:** `Admin3`
+
+Damit kann sich direkt eingeloggt werden unter:
+```
+http://127.0.0.1:5000/anmeldung
+```
+
+---
+
+## **Repository-Inhalt**
+
+- **Quellcode der Anwendung:** Implementiert mit Flask, SQLite und Bootstrap.  
+- **Technische Dokumentation:** Detaillierte Architektur, Designentscheidungen und Setup-Anleitungen.  
+- **Entwicklungshistorie:** Die Entwicklungsschritte lassen sich anhand der Commit-Historie im Repository nachvollziehen.  
+
+---
+
+## **Technologie-Stack**
+
+- **Backend:** Flask (Python)  
+- **Frontend:** Bootstrap, HTML, Jinja  
+- **Datenbank:** SQLite (SQLAlchemy ORM)  
+- **API-Integration:** Geoapify für Geolokalisierungsdienste  
 
 ---
 
 ## **Dokumentation**
-Die gesamte Dokumentation ist unter folgendem Link verfügbar:  
-> [PetMatch Dokumentation] https://simoneheinrich.github.io/PetMatch/
 
-**Enthält:**  
-- Starseite
-- Team-Beurteilung
-- Technische Dokumentation  
-- Personas
-- Nutzerbewertung 
+Die vollständige technische Dokumentation finden Sie unter folgendem Link:  
+[PetMatch Dokumentation](https://simoneheinrich.github.io/PetMatch/)
+
+**Inhalt der Dokumentation:**  
+
+### **Projektstruktur und Teamreflexion**
+- Design Entscheidung  
+- Team Beurteilung (mit Unterkategorien)  
+- Technische Dokumente (mit Unterkategorien)   
+- Persona  
+- Nutzerbewertung  
+- MVP für PetMatch  
+- Präsentation  
+- Figma Prototyp  
 
 ---
 
-## **Installation**
-1. **Repository klonen:**  
-   ```bash
-   git clone https://github.com/studSH/PetMatch.git
+## **Projektstatus**
 
-2. **virtuelle Umgebung einrichten**
-     ```bash
-    python -m venv env
-    source env/bin/activate  # Für macOS/Linux
-    env\Scripts\activate     # Für Windows
+### **Implementierte Funktionen**
+- Benutzer-Authentifizierung (Registrierung & Login)  
+- Profil- und Tierverwaltung  
+- Beitragserstellung  
+- Anzeigen der Beiträge im Feed  
+- Standortbasierter Feed mit Radius-Filterung  
 
-3. **Abhängigkeiten installieren:**
-     ```bash
-    pip install -r requirements.txt
-4. **Projekt starten**
-     ```bash
-    python app.py
-
-
-## **Status des Projekts**
-Aktuell befindet sich das Projekt noch in der Konzeptionsphase. Der Fokus lag bisher auf der Erstellung des Datenmodells, der UI-Designs und der Dokumentation/der Pages.  
-Es wurde noch kein Code implementiert, da dies im Rahmen der Aufgabenstellung nicht erforderlich war.
+### **Mögliche erweiternde Features**
+- Upload von Profilbildern  
+- Upload von Beitragsbildern  
+- Direkte Nachrichten zwischen Nutzern  
 
 ---
 
 ## **Mitwirkende**
-- **Simone Heinrich** (Matr.-Nr.: 77211956881)  
-- **Patryk Kujawski** (Matr.-Nr.: 77211961546)
 
+- **Simone Heinrich** – Matrikelnummer: 77211956881  
+- **Patryk Kujawski** – Matrikelnummer: 77211961546  
+
+---
+
+## **Lizenz**  
+
+Dieses Projekt wurde für den Kurs an der HWR Berlin entwickelt und steht unter der **MIT License**.  
+Die **MIT-Lizenz** erlaubt es, den Code frei zu verwenden, zu verändern und zu verbreiten, solange ein Hinweis auf die ursprünglichen Autoren erhalten bleibt.  
+
+Die vollständige Lizenz finden Sie in der Datei [`LICENSE.txt`](LICENSE.txt).
